@@ -1,0 +1,12 @@
+# created by virtualenv automatically
+env
+env/*
+.idea
+.idea/*
+misc
+misc/*
+libs/__pychache__
+config
+config/*
+uploads
+uploads/*
