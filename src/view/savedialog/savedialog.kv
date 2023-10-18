@@ -1,0 +1,44 @@
+<SaveDialog>:
+    title: 'Explorer'
+    size_hint: 0.8, 0.8
+
+    BoxLayout:
+        orientation: 'vertical'
+
+        FileChooserListView:
+            id: filechooser
+            on_path: root.path = self.path
+            on_selection: root.filename = self.selection
+
+        MDStackLayout:
+            orientation: "tb-lr"
+            spacing: 0, 20
+
+            MDTextField:
+                id: ti_path
+                size_hint_y: None
+                hint_text: "Path"
+                mode: "rectangle"
+                readonly: True
+                height: 30
+                multiline: False
+
+            MDTextField:
+                id: ti_filename
+                size_hint_y: None
+                hint_text: "Filename"
+                mode: "rectangle"
+                height: 30
+                multiline: False
+                on_text: root.filename = self.text
+
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            Button:
+                text: "Cancel"
+                on_release: root.cancel()
+
+            Button:
+                text: "Save"
+                on_release: root.save()
