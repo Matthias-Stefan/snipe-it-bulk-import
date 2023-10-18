@@ -1,5 +1,6 @@
 """main.py
-
+====================================
+The core module of my example project
 """
 
 __author__ = "Matthias Stefan"
