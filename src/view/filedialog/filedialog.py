@@ -1,5 +1,5 @@
 __author__ = "Matthias Stefan"
-__version__ = "0.0.1"
+__version__ = "0.2.0"
 
 import os
 
@@ -9,18 +9,17 @@ from kivy.uix.popup import Popup
 from pathlib import Path
 
 
-class SaveDialog(Popup):
+class FileDialog(Popup):
     """SaveDialog serves as a file-saving dialog, offering a FileChooserListView for folder selection and filename
     definition. When the "save" button is pressed, the SaveDialog calls the provided callback function,
     passing the selected file path to the callee.
 
-    :inherits: kivy.uix.popup.Popup
     :param callback: A callable function that accepts a Path object and returns None.
     :type callback: collections.abc.Callable
     :param kwargs: Additional keyword arguments to be passed to the Popup constructor.
     """
     def __init__(self, callback: Callable[[Path], None], **kwargs):
-        super(SaveDialog, self).__init__(**kwargs)
+        super(FileDialog, self).__init__(**kwargs)
         self._path = ""
         self._filename = ""
         self._callback = callback
@@ -68,7 +67,10 @@ class SaveDialog(Popup):
     def filename(self, value):
         if isinstance(value, ObservableList):
             if len(value) > 0:
-                self._filename = Path(value[0]).name
+                path = Path(value[0])
+                self._filename = path.name
+                self._path = str(path.parent)
+                self.ids.ti_path.text = str(path.parent)
         elif isinstance(value, str):
             self._filename = value
         self.ids.ti_filename.text = self._filename

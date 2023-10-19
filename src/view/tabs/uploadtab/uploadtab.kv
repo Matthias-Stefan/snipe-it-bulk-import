@@ -1,0 +1,44 @@
+<UploadTab>:
+    MDGridLayout:
+        pos_hint: {"x": 0, "top": 1}
+        cols: 3
+        rows: 2
+        padding: 20, 20, 20, 20
+        spacing: 20, 20
+        size_hint_y: None
+        row_default_height: 20
+
+        # //////////
+
+        MDLabel:
+            id: lb_file
+            text: "File"
+            size_hint_x: 1.4
+
+        MDTextField:
+            id: tf_file
+            mode: "rectangle"
+            hint_text: "Filename"
+            helper_text: "Press the button to launch File Explorer"
+            helper_text_mode: "persistent"
+            on_text: root.filepath = self.text
+            size_hint_x: 4.6
+
+        MDRoundFlatIconButton:
+            text: "Open"
+            icon: "folder"
+            pos_hint: {'center_x': 0.5, 'center_y': 0.6}
+            on_release: root.open_filechooser()
+            size_hint_x: 1.2
+
+        # ////////////////////////////////////////
+
+        Widget:
+
+        Widget:
+
+        MDRaisedButton:
+            text: "Upload"
+            on_press: root.on_upload()
+
+        # ////////////////////////////////////////

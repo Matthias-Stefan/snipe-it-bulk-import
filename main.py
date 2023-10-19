@@ -1,11 +1,5 @@
-"""main.py
-====================================
-The core module of my example project
-"""
-
 __author__ = "Matthias Stefan"
-__version__ = "0.0.1"
-
+__version__ = "0.1.0"
 
 from src.view.main_window import *
 

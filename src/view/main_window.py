@@ -3,10 +3,10 @@
 """
 
 __author__ = "Matthias Stefan"
-__version__ = "0.0.1"
+__version__ = "0.1.0"
 
-from src.view.tabs import TemplateTab
 from src.view.progress import ProgressInfo
+from src.view.tabs import TemplateTab, UploadTab
 
 import kivy
 kivy.require('2.2.1')
@@ -23,13 +23,14 @@ class MainWindow(MDApp):
         self.title = "Snipe-IT Bulk Import"
 
         Builder.load_file(os.path.join(os.path.dirname(__file__), "progress/progress.kv"))
-        Builder.load_file(os.path.join(os.path.dirname(__file__), "savedialog/savedialog.kv"))
+        Builder.load_file(os.path.join(os.path.dirname(__file__), "filedialog/filedialog.kv"))
+        Builder.load_file(os.path.join(os.path.dirname(__file__), "tabs/uploadtab/uploadtab.kv"))
         Builder.load_file(os.path.join(os.path.dirname(__file__), "tabs/templatetab/templatetab.kv"))
         return Builder.load_file(os.path.join(os.path.dirname(__file__), "main.kv"))
 
     def on_start(self):
         self.root.ids.tabs.add_widget(TemplateTab())
-        #self.root.ids.tabs.add_widget(UploadTab())
+        self.root.ids.tabs.add_widget(UploadTab())
         #self.root.ids.tabs.add_widget(CheckoutTab())
         #self.root.ids.tabs.add_widget(SetupTab())
 

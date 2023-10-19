@@ -1,123 +1,123 @@
 <TemplateTab>:
-    MDStackLayout:
-        orientation: "tb-lr"
+    MDGridLayout:
+        pos_hint: {"x": 0, "top": 1}
+        cols: 3
+        rows: 8
+        padding: 20, 20, 20, 20
+        spacing: 20, 20
+        size_hint_y: None
+        row_default_height: 20
 
-        MDGridLayout:
-            cols: 3
-            rows: 8
-            padding: 20, 20, 20, 20
-            spacing: 20, 20
-            size_hint_y: None
+        # //////////
 
-            MDLabel:
-                id: lb_model
-                text: "Model"
-                size_hint_x: 1.7
+        MDLabel:
+            id: lb_model
+            text: "Model"
+            size_hint_x: 1.4
 
-            Spinner:
-                id: sp_model
-                text: root.models[0] if not None else ""
-                values: root.selected_models
-                on_text: root.model = self.text
-                size_hint_x: 5
+        Spinner:
+            id: sp_model
+            text: root.models[0] if not None else ""
+            values: root.selected_models
+            on_text: root.model = self.text
+            size_hint_x: 4.6
 
-            MDTextField:
-                id: tf_model
-                mode: "rectangle"
-                hint_text: "Filter Model"
-                helper_text_mode: "persistent"
-                on_text: root.filter_model = self.text
+        MDTextField:
+            id: tf_model
+            mode: "rectangle"
+            hint_text: "Filter Model"
+            helper_text_mode: "persistent"
+            on_text: root.filter_model = self.text
+            size_hint_x: 1.2
 
-            # ////////////////////////////////////////
+        # ////////////////////////////////////////
 
-            MDLabel:
-                id: lb_quantity
-                text: "Quantity"
+        MDLabel:
+            id: lb_quantity
+            text: "Quantity"
 
-            MDTextField:
-                id: tf_quantity
-                mode: "rectangle"
-                fill_color: 1.0, 0, 0, 0.4
-                hint_text: "Quantity"
-                helper_text_mode: "persistent"
-                input_type: "number"
-                input_filter: "int"
-                on_text: root.quantity = self.text
+        MDTextField:
+            id: tf_quantity
+            mode: "rectangle"
+            hint_text: "Quantity"
+            helper_text_mode: "persistent"
+            input_type: "number"
+            input_filter: "int"
+            on_text: root.quantity = self.text
 
-            Widget:
+        Widget:
 
-            # ////////////////////////////////////////
+        # ////////////////////////////////////////
 
-            MDLabel:
-                id: lb_status_label
-                text: "Status Label"
+        MDLabel:
+            id: lb_status_label
+            text: "Status Label"
 
-            Spinner:
-                id: sp_status_label
-                text: root.status_labels[0] if not None else ""
-                values: root.selected_status_labels
-                on_text: root.status_label = self.text
+        Spinner:
+            id: sp_status_label
+            text: root.status_labels[0] if not None else ""
+            values: root.selected_status_labels
+            on_text: root.status_label = self.text
 
-            MDTextField:
-                id: tf_status_label
-                mode: "rectangle"
-                hint_text: "Filter Status Label"
-                helper_text_mode: "persistent"
-                on_text: root.filter_status_label = self.text
+        MDTextField:
+            id: tf_status_label
+            mode: "rectangle"
+            hint_text: "Filter Status Label"
+            helper_text_mode: "persistent"
+            on_text: root.filter_status_label = self.text
 
-            # ////////////////////////////////////////
+        # ////////////////////////////////////////
 
-            MDLabel:
-                id: lb_file
-                text: "File"
+        MDLabel:
+            id: lb_file
+            text: "File"
 
-            MDTextField:
-                id: tf_file
-                mode: "rectangle"
-                hint_text: "Filename"
-                helper_text: "Press the button to launch File Explorer"
-                helper_text_mode: "persistent"
-                on_text: root.filepath = self.text
+        MDTextField:
+            id: tf_file
+            mode: "rectangle"
+            hint_text: "Filename"
+            helper_text: "Press the button to launch File Explorer"
+            helper_text_mode: "persistent"
+            on_text: root.filepath = self.text
 
-            MDRoundFlatIconButton:
-                text: "Open"
-                icon: "folder"
-                pos_hint: {'center_x': 0.5, 'center_y': 0.6}
-                on_release: root.open_filechooser()
+        MDRoundFlatIconButton:
+            text: "Open"
+            icon: "folder"
+            pos_hint: {'center_x': 0.5, 'center_y': 0.6}
+            on_release: root.open_filechooser()
 
-            # ////////////////////////////////////////
+        # ////////////////////////////////////////
 
-            MDLabel:
-                id: lb_autostart
-                text: "Autostart Excel"
+        MDLabel:
+            id: lb_autostart
+            text: "Autostart Excel"
 
-            MDCheckbox:
-                size_hint: None, None
-                size: "48dp", "48dp"
-                on_active: root.autostart = self.active
+        MDCheckbox:
+            size_hint: None, None
+            size: "48dp", "48dp"
+            on_active: root.autostart = self.active
 
-            Widget:
+        Widget:
 
-            # ////////////////////////////////////////
+        # ////////////////////////////////////////
 
-            MDLabel:
-                id: lb_auto_upload
-                text: "Autoupload"
+        MDLabel:
+            id: lb_auto_upload
+            text: "Autoupload"
 
-            MDCheckbox:
-                size_hint: None, None
-                size: "48dp", "48dp"
-                on_active: root.auto_upload = self.active
+        MDCheckbox:
+            size_hint: None, None
+            size: "48dp", "48dp"
+            on_active: root.auto_upload = self.active
 
-            Widget:
+        Widget:
 
-            # ////////////////////////////////////////
+        # ////////////////////////////////////////
 
-            Widget:
+        Widget:
 
-            Widget:
+        Widget:
 
-            MDRaisedButton:
-                text: "Create"
-                on_press: root.on_template_create()
-
+        MDRaisedButton:
+            text: "Create"
+            on_press: root.on_template_create()

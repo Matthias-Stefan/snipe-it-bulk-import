@@ -1,5 +1,5 @@
 __author__ = "Matthias Stefan"
-__version__ = "0.0.1"
+__version__ = "0.1.0"
 
 from kivymd.color_definitions import colors
 from kivymd.uix.anchorlayout import MDAnchorLayout

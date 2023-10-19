@@ -1,7 +1,7 @@
 __author__ = "Matthias Stefan"
-__version__ = "0.0.1"
+__version__ = "0.1.1"
 
-from src.view.savedialog import SaveDialog
+from src.view.filedialog import FileDialog
 
 import os
 
@@ -16,7 +16,6 @@ class TemplateTab(MDFloatLayout, MDTabsBase):
     available for automatic Excel opening. In the case of autoupload, the app waits until Excel is closed and
     then initiates an automatic upload.
 
-    :inherits: kivymd.uix.tab.MDTabsBase, kivymd.uix.floatlayout.MDFloatLayout
     :param kwargs: Extra keyword arguments passed to the super constructor.
     """
 
@@ -46,15 +45,16 @@ class TemplateTab(MDFloatLayout, MDTabsBase):
 
         :rtype: None
         """
-        pass
+        x = 5
+        return
 
     def open_filechooser(self):
         """Opens the file chooser dialog.
 
         :rtype: None
         """
-        save_dialog = SaveDialog(self.filename_callback)
-        save_dialog.open()
+        file_dialog = FileDialog(self.filename_callback)
+        file_dialog.open()
 
     def filename_callback(self, filepath: Path):
         """Callback to receive a file path.
