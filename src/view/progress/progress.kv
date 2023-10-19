@@ -1,0 +1,23 @@
+<ProgressInfo>:
+    anchor_x: "left"
+    anchor_y: "bottom"
+    size_hint_x: 0.5
+
+    MDBoxLayout:
+        orientation: "horizontal"
+        spacing: 20
+
+        MDProgressBar:
+            id: pb_progress_bar
+            max: 100
+            value: 0
+            size_hint_x: 0.2
+
+        MDSpinner:
+            id: mdsp_progress
+            active: False
+            size_hint: None, None
+            size: 18, 18
+
+        MDLabel:
+            id: lb_progress_info

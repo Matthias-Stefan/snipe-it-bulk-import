@@ -12,6 +12,7 @@
             MDLabel:
                 id: lb_model
                 text: "Model"
+                size_hint_x: 1.7
 
             Spinner:
                 id: sp_model
@@ -26,8 +27,6 @@
                 hint_text: "Filter Model"
                 helper_text_mode: "persistent"
                 on_text: root.filter_model = self.text
-
-
 
             # ////////////////////////////////////////
 
@@ -103,7 +102,7 @@
 
             MDLabel:
                 id: lb_auto_upload
-                text: "Autostart Upload"
+                text: "Autoupload"
 
             MDCheckbox:
                 size_hint: None, None
@@ -114,6 +113,11 @@
 
             # ////////////////////////////////////////
 
+            Widget:
+
+            Widget:
+
             MDRaisedButton:
                 text: "Create"
-                md_bg_color: "red"
+                on_press: root.on_template_create()
+

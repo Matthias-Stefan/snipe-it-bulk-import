@@ -24,3 +24,5 @@ Contents
    :caption: Contents:
 
    savedialog
+   templatetab
+   progress

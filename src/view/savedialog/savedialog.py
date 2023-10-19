@@ -14,7 +14,7 @@ class SaveDialog(Popup):
     definition. When the "save" button is pressed, the SaveDialog calls the provided callback function,
     passing the selected file path to the callee.
 
-    :inherits: kivy.uix.popup
+    :inherits: kivy.uix.popup.Popup
     :param callback: A callable function that accepts a Path object and returns None.
     :type callback: collections.abc.Callable
     :param kwargs: Additional keyword arguments to be passed to the Popup constructor.
@@ -48,7 +48,6 @@ class SaveDialog(Popup):
         """Property for retrieving the current path value.
 
         :type: str
-        :value: The current path.
         """
         return self._path
 
@@ -62,7 +61,6 @@ class SaveDialog(Popup):
         """Property for retrieving the current filename.
 
         :type: str
-        :value: The current filename.
         """
         return self._filename
 

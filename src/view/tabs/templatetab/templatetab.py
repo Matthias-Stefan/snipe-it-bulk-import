@@ -1,14 +1,9 @@
-"""templatetab.py
-
-"""
-
 __author__ = "Matthias Stefan"
 __version__ = "0.0.1"
 
 from src.view.savedialog import SaveDialog
 
 import os
-
 
 from kivymd.uix.tab import MDTabsBase
 from kivymd.uix.floatlayout import MDFloatLayout
@@ -17,7 +12,15 @@ from pathlib import Path
 
 
 class TemplateTab(MDFloatLayout, MDTabsBase):
-    models = [f"value_t{i}" for i in range(100)]+[f"test{i}" for i in range(100)]
+    """This section is for specifying details for creating the Assetcreate CSV. In the template, options are
+    available for automatic Excel opening. In the case of autoupload, the app waits until Excel is closed and
+    then initiates an automatic upload.
+
+    :inherits: kivymd.uix.tab.MDTabsBase, kivymd.uix.floatlayout.MDFloatLayout
+    :param kwargs: Extra keyword arguments passed to the super constructor.
+    """
+
+    models = [f"value_t{i}" for i in range(5)]+[f"test{i}" for i in range(5)]
     selected_models = ListProperty(models)
 
     status_labels = ["Undeployable", "Deployable", "Archived", "Pending"]
@@ -38,16 +41,37 @@ class TemplateTab(MDFloatLayout, MDTabsBase):
         self._filter_model = ""
         self._filter_status_label = ""
 
+    def on_template_create(self):
+        """Initiates the creation process.
+
+        :rtype: None
+        """
+        pass
+
     def open_filechooser(self):
+        """Opens the file chooser dialog.
+
+        :rtype: None
+        """
         save_dialog = SaveDialog(self.filename_callback)
         save_dialog.open()
 
     def filename_callback(self, filepath: Path):
+        """Callback to receive a file path.
+
+        :param filepath:
+        :type filepath: pathlib.Path
+        :rtype: None
+        """
         self._filepath = filepath
         self.ids.tf_file.text = str(self._filepath)
 
     @property
     def model(self):
+        """Retrieve the current model.
+
+        :type: str
+        """
         return self._model
 
     @model.setter
@@ -56,6 +80,10 @@ class TemplateTab(MDFloatLayout, MDTabsBase):
 
     @property
     def filter_model(self):
+        """Filter the dropdown menu.
+
+        :type: str
+        """
         return self._filter_model
 
     @filter_model.setter
@@ -70,6 +98,10 @@ class TemplateTab(MDFloatLayout, MDTabsBase):
 
     @property
     def quantity(self):
+        """The quantity for asset creation.
+
+        :type: int
+        """
         return self._quantity
 
     @quantity.setter
@@ -79,6 +111,10 @@ class TemplateTab(MDFloatLayout, MDTabsBase):
 
     @property
     def status_label(self):
+        """Retrieve the status label.
+
+        :type: str
+        """
         return self._status_label
 
     @status_label.setter
@@ -87,6 +123,10 @@ class TemplateTab(MDFloatLayout, MDTabsBase):
 
     @property
     def filter_status_label(self):
+        """Filter the dropdown menu.
+
+        :type: str
+        """
         return self._filter_status_label
 
     @filter_status_label.setter
@@ -101,6 +141,10 @@ class TemplateTab(MDFloatLayout, MDTabsBase):
 
     @property
     def filepath(self):
+        """The path or filename of the new CSV to be created.
+
+        :type: pathlib.Path
+        """
         return self._filepath
 
     @filepath.setter
@@ -111,6 +155,10 @@ class TemplateTab(MDFloatLayout, MDTabsBase):
 
     @property
     def autostart(self):
+        """Determine if Excel should be automatically invoked.
+
+        :type: bool
+        """
         return self._autostart
 
     @autostart.setter
@@ -119,6 +167,10 @@ class TemplateTab(MDFloatLayout, MDTabsBase):
 
     @property
     def auto_upload(self):
+        """Determine if CSV should be automatically uploaded.
+
+        :type: bool
+        """
         return self._auto_upload
 
     @auto_upload.setter
