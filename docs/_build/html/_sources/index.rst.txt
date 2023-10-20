@@ -23,8 +23,9 @@ Contents
    :maxdepth: 2
    :caption: Contents:
 
-   filebrowser
+   file_browser
    progress
-   createassettab
-   uploadtab
-   checkouttab
+   create_asset_tab
+   upload_tab
+   checkout_tab
+   settings_tab

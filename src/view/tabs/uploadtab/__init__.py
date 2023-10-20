@@ -1,1 +1,0 @@
-from .uploadtab import UploadTab

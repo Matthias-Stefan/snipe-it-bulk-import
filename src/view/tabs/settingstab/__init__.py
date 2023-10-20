@@ -1,1 +1,0 @@
-from .settingstab import SettingsTab
