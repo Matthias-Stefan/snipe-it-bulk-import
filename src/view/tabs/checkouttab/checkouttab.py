@@ -10,25 +10,28 @@ from kivymd.uix.floatlayout import MDFloatLayout
 from pathlib import Path
 
 
-class UploadTab(MDFloatLayout, MDTabsBase):
-    """Upload previously created template CSV files here.
+class CheckoutTab(MDFloatLayout, MDTabsBase):
+    """Generating the Asset Checkout CSV includes options for automatically opening the file in Excel. In the event of
+    auto-upload, the application will pause until Excel is closed, at which point it will proceed with an automatic
+    upload.
 
     :param kwargs: Extra keyword arguments passed to the super constructor.
     """
 
     def __init__(self, **kwargs):
-        super(UploadTab, self).__init__(**kwargs)
-        self.title = "Upload"
-        self.icon = "upload"
+        super(CheckoutTab, self).__init__(**kwargs)
+        self.title = "Checkout Template"
+        self.icon = "source-branch-check"
         self._filepath = None
+        self._autostart = False
+        self._auto_upload = False
 
-    def on_upload(self):
-        """Initiates the upload process.
+    def on_template_create(self):
+        """Initiates the creation process.
 
         :rtype: None
         """
         x = 5
-        return
 
     def open_filebrowser(self):
         """Opens the file chooser dialog.
@@ -62,4 +65,27 @@ class UploadTab(MDFloatLayout, MDTabsBase):
         if os.path.exists(path.parent.absolute()):
             self._filepath = path
 
+    @property
+    def autostart(self):
+        """Determine if Excel should be automatically invoked.
+
+        :type: bool
+        """
+        return self._autostart
+
+    @autostart.setter
+    def autostart(self, value):
+        self._autostart = value
+
+    @property
+    def auto_upload(self):
+        """Determine if CSV should be automatically uploaded.
+
+        :type: bool
+        """
+        return self._auto_upload
+
+    @auto_upload.setter
+    def auto_upload(self, value):
+        self._auto_upload = value
 

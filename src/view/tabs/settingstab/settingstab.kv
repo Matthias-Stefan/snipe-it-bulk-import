@@ -1,0 +1,81 @@
+<SettingsTab>:
+    MDGridLayout:
+        pos_hint: {"x": 0, "top": 1}
+        cols: 2
+        rows: 9
+        padding: 20, 20, 20, 20
+        spacing: 20, 10
+        size_hint_y: None
+        row_default_height: 20
+
+        # //////////
+
+        MDLabel:
+            id: lb_url
+            text: "URL"
+            size_hint_x: 1.4
+
+        MDTextField:
+            id: tf_url
+            mode: "rectangle"
+            hint_text: "URL"
+            helper_text_mode: "persistent"
+            on_text: root.url = self.text
+            size_hint_x: 4.6
+
+        # //////////
+
+        MDLabel:
+            id: lb_token
+            text: "Token"
+            size_hint_x: 1.4
+
+        MDTextField:
+            id: tf_token
+            mode: "rectangle"
+            hint_text: "Token"
+            helper_text_mode: "persistent"
+            on_text: root.token = self.text
+            size_hint_x: 4.6
+
+        # //////////
+
+        MDLabel:
+            id: lb_excel_path
+            text: "Excel Path"
+            size_hint_x: 1.4
+
+        MDTextField:
+            id: tf_excel_path
+            mode: "rectangle"
+            hint_text: "Excel Path"
+            helper_text_mode: "persistent"
+            on_text: root.excel_path = self.text
+            size_hint_x: 4.6
+
+        # //////////
+        # predefines
+
+        MDLabel:
+            id: lb_predefine_output_folder
+            text: "Predefine Output Folder"
+            size_hint_x: 1.4
+
+        MDTextField:
+            id: tf_predefine_output_folder
+            mode: "rectangle"
+            hint_text: "Predefine Output Folder"
+            helper_text_mode: "persistent"
+            on_text: root.predefine_output_folder = self.text
+            size_hint_x: 4.6
+
+    # ////////////////////////////////////////
+
+    AnchorLayout:
+        anchor_x: "right"
+        anchor_y: "bottom"
+        padding: 40, 40, 40, 40
+
+        MDRaisedButton:
+            text: "Save"
+            on_press: root.on_save()

@@ -1,4 +1,4 @@
-.. automodule:: src.view.tabs.templatetab.templatetab
+.. automodule:: src.view.tabs.uploadtab.uploadtab
    :members:
    :undoc-members:
    :show-inheritance:

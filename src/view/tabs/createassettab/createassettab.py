@@ -1,7 +1,7 @@
 __author__ = "Matthias Stefan"
-__version__ = "0.1.1"
+__version__ = "0.2.0"
 
-from src.view.filedialog import FileDialog
+from src.view.filebrowser import FileBrowser
 
 import os
 
@@ -11,10 +11,10 @@ from kivy.properties import ListProperty
 from pathlib import Path
 
 
-class TemplateTab(MDFloatLayout, MDTabsBase):
-    """This section is for specifying details for creating the Assetcreate CSV. In the template, options are
-    available for automatic Excel opening. In the case of autoupload, the app waits until Excel is closed and
-    then initiates an automatic upload.
+class CreateAssetTab(MDFloatLayout, MDTabsBase):
+    """Generating the Asset Creation CSV. Within the template, there are choices for enabling automatic Excel opening.
+    When auto-upload is selected, the application will wait until Excel is closed and then proceed with an automatic
+    upload.
 
     :param kwargs: Extra keyword arguments passed to the super constructor.
     """
@@ -26,9 +26,9 @@ class TemplateTab(MDFloatLayout, MDTabsBase):
     selected_status_labels = ListProperty(status_labels)
 
     def __init__(self, **kwargs):
-        super(TemplateTab, self).__init__(**kwargs)
-        self.title = "Template"
-        self.icon = "file-table"
+        super(CreateAssetTab, self).__init__(**kwargs)
+        self.title = "Create Asset Template"
+        self.icon = "devices"
 
         self._model = ""
         self._quantity = 0
@@ -48,16 +48,16 @@ class TemplateTab(MDFloatLayout, MDTabsBase):
         x = 5
         return
 
-    def open_filechooser(self):
+    def open_filebrowser(self):
         """Opens the file chooser dialog.
 
         :rtype: None
         """
-        file_dialog = FileDialog(self.filename_callback)
+        file_dialog = FileBrowser(self.filename_callback)
         file_dialog.open()
 
     def filename_callback(self, filepath: Path):
-        """Callback to receive a file path.
+        """Callback to receive a filepath.
 
         :param filepath:
         :type filepath: pathlib.Path

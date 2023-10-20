@@ -1,8 +1,8 @@
-<UploadTab>:
+<CheckoutTab>:
     MDGridLayout:
         pos_hint: {"x": 0, "top": 1}
         cols: 3
-        rows: 1
+        rows: 3
         padding: 20, 20, 20, 20
         spacing: 20, 10
         size_hint_y: None
@@ -31,6 +31,32 @@
             on_release: root.open_filebrowser()
             size_hint_x: 1.2
 
+        # ////////////////////////////////////////
+
+        MDLabel:
+            id: lb_autostart
+            text: "Autostart Excel"
+
+        MDCheckbox:
+            size_hint: None, None
+            size: "48dp", "48dp"
+            on_active: root.autostart = self.active
+
+        Widget:
+
+        # ////////////////////////////////////////
+
+        MDLabel:
+            id: lb_auto_upload
+            text: "Autoupload"
+
+        MDCheckbox:
+            size_hint: None, None
+            size: "48dp", "48dp"
+            on_active: root.auto_upload = self.active
+
+        Widget:
+
     # ////////////////////////////////////////
 
     AnchorLayout:
@@ -39,6 +65,5 @@
         padding: 40, 40, 40, 40
 
         MDRaisedButton:
-            text: "Upload"
-            on_press: root.on_upload()
-
+            text: "Create"
+            on_press: root.on_template_create()

@@ -9,9 +9,9 @@ from kivy.uix.popup import Popup
 from pathlib import Path
 
 
-class FileDialog(Popup):
-    """SaveDialog serves as a file-saving dialog, offering a FileChooserListView for folder selection and filename
-    definition. When the "save" button is pressed, the SaveDialog calls the provided callback function,
+class FileBrowser(Popup):
+    """FileBrowser serves as a file dialog, offering a FileChooserListView for folder selection and filename
+    definition. When the "save" button is pressed, the FileBrowser calls the provided callback function,
     passing the selected file path to the callee.
 
     :param callback: A callable function that accepts a Path object and returns None.
@@ -19,7 +19,7 @@ class FileDialog(Popup):
     :param kwargs: Additional keyword arguments to be passed to the Popup constructor.
     """
     def __init__(self, callback: Callable[[Path], None], **kwargs):
-        super(FileDialog, self).__init__(**kwargs)
+        super(FileBrowser, self).__init__(**kwargs)
         self._path = ""
         self._filename = ""
         self._callback = callback

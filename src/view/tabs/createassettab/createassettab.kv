@@ -1,10 +1,10 @@
-<TemplateTab>:
+<CreateAssetTab>:
     MDGridLayout:
         pos_hint: {"x": 0, "top": 1}
         cols: 3
-        rows: 8
+        rows: 7
         padding: 20, 20, 20, 20
-        spacing: 20, 20
+        spacing: 20, 10
         size_hint_y: None
         row_default_height: 20
 
@@ -84,7 +84,7 @@
             text: "Open"
             icon: "folder"
             pos_hint: {'center_x': 0.5, 'center_y': 0.6}
-            on_release: root.open_filechooser()
+            on_release: root.open_filebrowser()
 
         # ////////////////////////////////////////
 
@@ -112,11 +112,12 @@
 
         Widget:
 
-        # ////////////////////////////////////////
+    # ////////////////////////////////////////
 
-        Widget:
-
-        Widget:
+    AnchorLayout:
+        anchor_x: "right"
+        anchor_y: "bottom"
+        padding: 40, 40, 40, 40
 
         MDRaisedButton:
             text: "Create"

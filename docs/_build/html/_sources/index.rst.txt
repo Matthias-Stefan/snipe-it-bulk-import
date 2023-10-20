@@ -23,6 +23,8 @@ Contents
    :maxdepth: 2
    :caption: Contents:
 
-   savedialog
-   templatetab
+   filebrowser
    progress
+   createassettab
+   uploadtab
+   checkouttab

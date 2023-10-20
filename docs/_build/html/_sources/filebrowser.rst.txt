@@ -1,4 +1,4 @@
-.. automodule:: src.view.savedialog.savedialog
+.. automodule:: src.view.filebrowser.filebrowser
    :members:
    :undoc-members:
    :show-inheritance:

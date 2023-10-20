@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>&lt;no title&gt; &#8212; Snipe-IT Bulk Import 30.11.2023 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=039e1c02" />
+    <script src="_static/documentation_options.js?v=d820276a"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="&lt;no title&gt;" href="progress.html" />
+    <link rel="prev" title="Welcome to Snipe-IT Bulk Import’s documentation!" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <dl class="py class" id="module-src.view.filebrowser.filebrowser">
+<dt class="sig sig-object py" id="src.view.filebrowser.filebrowser.FileBrowser">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.view.filebrowser.filebrowser.</span></span><span class="sig-name descname"><span class="pre">FileBrowser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.view.filebrowser.filebrowser.FileBrowser" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Popup</span></code></p>
+<p>FileBrowser serves as a file dialog, offering a FileChooserListView for folder selection and filename
+definition. When the “save” button is pressed, the FileBrowser calls the provided callback function,
+passing the selected file path to the callee.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>callback</strong> (<em>collections.abc.Callable</em>) – A callable function that accepts a Path object and returns None.</p></li>
+<li><p><strong>kwargs</strong> – Additional keyword arguments to be passed to the Popup constructor.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.view.filebrowser.filebrowser.FileBrowser.cancel">
+<span class="sig-name descname"><span class="pre">cancel</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.view.filebrowser.filebrowser.FileBrowser.cancel" title="Link to this definition">¶</a></dt>
+<dd><p>Dismisses the dialog.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.view.filebrowser.filebrowser.FileBrowser.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.view.filebrowser.filebrowser.FileBrowser.save" title="Link to this definition">¶</a></dt>
+<dd><p>Generates the file path, checks its validity, and invokes the callback function to share the selected
+filename.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.view.filebrowser.filebrowser.FileBrowser.path">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">path</span></span><a class="headerlink" href="#src.view.filebrowser.filebrowser.FileBrowser.path" title="Link to this definition">¶</a></dt>
+<dd><p>Property for retrieving the current path value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.view.filebrowser.filebrowser.FileBrowser.filename">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">filename</span></span><a class="headerlink" href="#src.view.filebrowser.filebrowser.FileBrowser.filename" title="Link to this definition">¶</a></dt>
+<dd><p>Property for retrieving the current filename.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Snipe-IT Bulk Import</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">FileBrowser</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#src.view.filebrowser.filebrowser.FileBrowser.cancel"><code class="docutils literal notranslate"><span class="pre">FileBrowser.cancel()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#src.view.filebrowser.filebrowser.FileBrowser.save"><code class="docutils literal notranslate"><span class="pre">FileBrowser.save()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#src.view.filebrowser.filebrowser.FileBrowser.path"><code class="docutils literal notranslate"><span class="pre">FileBrowser.path</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#src.view.filebrowser.filebrowser.FileBrowser.filename"><code class="docutils literal notranslate"><span class="pre">FileBrowser.filename</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="progress.html"><code class="docutils literal notranslate"><span class="pre">ProgressInfo</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="createassettab.html"><code class="docutils literal notranslate"><span class="pre">CreateAssetTab</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="uploadtab.html"><code class="docutils literal notranslate"><span class="pre">UploadTab</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="checkouttab.html"><code class="docutils literal notranslate"><span class="pre">CheckoutTab</span></code></a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Welcome to Snipe-IT Bulk Import’s documentation!</a></li>
+      <li>Next: <a href="progress.html" title="next chapter">&lt;no title&gt;</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Matthias Stefan.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="_sources/filebrowser.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

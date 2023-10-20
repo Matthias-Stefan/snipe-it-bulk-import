@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>&lt;no title&gt; &#8212; Snipe-IT Bulk Import 30.11.2023 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=039e1c02" />
+    <script src="_static/documentation_options.js?v=d820276a"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="&lt;no title&gt;" href="uploadtab.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="progress.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <dl class="py class" id="module-src.view.tabs.createassettab.createassettab">
+<dt class="sig sig-object py" id="src.view.tabs.createassettab.createassettab.CreateAssetTab">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.view.tabs.createassettab.createassettab.</span></span><span class="sig-name descname"><span class="pre">CreateAssetTab</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.view.tabs.createassettab.createassettab.CreateAssetTab" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">MDFloatLayout</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">MDTabsBase</span></code></p>
+<p>Generating the Asset Creation CSV. Within the template, there are choices for enabling automatic Excel opening.
+When auto-upload is selected, the application will wait until Excel is closed and then proceed with an automatic
+upload.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>kwargs</strong> – Extra keyword arguments passed to the super constructor.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.view.tabs.createassettab.createassettab.CreateAssetTab.models">
+<span class="sig-name descname"><span class="pre">models</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['value_t0',</span> <span class="pre">'value_t1',</span> <span class="pre">'value_t2',</span> <span class="pre">'value_t3',</span> <span class="pre">'value_t4',</span> <span class="pre">'test0',</span> <span class="pre">'test1',</span> <span class="pre">'test2',</span> <span class="pre">'test3',</span> <span class="pre">'test4']</span></em><a class="headerlink" href="#src.view.tabs.createassettab.createassettab.CreateAssetTab.models" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.view.tabs.createassettab.createassettab.CreateAssetTab.selected_models">
+<span class="sig-name descname"><span class="pre">selected_models</span></span><a class="headerlink" href="#src.view.tabs.createassettab.createassettab.CreateAssetTab.selected_models" title="Link to this definition">¶</a></dt>
+<dd><p>ListProperty(defaultvalue=0, <a href="#id1"><span class="problematic" id="id2">**</span></a>kw)
+Property that represents a list.</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><cite>defaultvalue</cite>: list, defaults to []</dt><dd><p>Specifies the default value of the property.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>When assigning a list to a <code class="xref py py-class docutils literal notranslate"><span class="pre">ListProperty</span></code>, the list stored in
+the property is a shallow copy of the list and not the original list. This can
+be demonstrated with the following example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyWidget</span><span class="p">(</span><span class="n">Widget</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">my_list</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([])</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">widget</span> <span class="o">=</span> <span class="n">MyWidget</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;hi&#39;</span><span class="p">:</span> <span class="s1">&#39;hello&#39;</span><span class="p">}]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">widget</span><span class="o">.</span><span class="n">my_list</span> <span class="o">=</span> <span class="n">my_list</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">my_list</span> <span class="ow">is</span> <span class="n">widget</span><span class="o">.</span><span class="n">my_list</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">my_list</span><span class="p">,</span> <span class="n">widget</span><span class="o">.</span><span class="n">my_list</span><span class="p">)</span>
+<span class="go">[1, 5, {&#39;hi&#39;: &#39;hello&#39;}, 10] [1, 5, {&#39;hi&#39;: &#39;hello&#39;}]</span>
+</pre></div>
+</div>
+<p>However, changes to nested levels will affect the property as well,
+since the property uses a shallow copy of my_list.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">my_list</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="s1">&#39;hi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;bye&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">my_list</span><span class="p">,</span> <span class="n">widget</span><span class="o">.</span><span class="n">my_list</span><span class="p">)</span>
+<span class="go">[1, 5, {&#39;hi&#39;: &#39;bye&#39;}, 10] [1, 5, {&#39;hi&#39;: &#39;bye&#39;}]</span>
+</pre></div>
+</div>
+</div>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.view.tabs.createassettab.createassettab.CreateAssetTab.status_labels">
+<span class="sig-name descname"><span class="pre">status_labels</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['Undeployable',</span> <span class="pre">'Deployable',</span> <span class="pre">'Archived',</span> <span class="pre">'Pending']</span></em><a class="headerlink" href="#src.view.tabs.createassettab.createassettab.CreateAssetTab.status_labels" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.view.tabs.createassettab.createassettab.CreateAssetTab.selected_status_labels">
+<span class="sig-name descname"><span class="pre">selected_status_labels</span></span><a class="headerlink" href="#src.view.tabs.createassettab.createassettab.CreateAssetTab.selected_status_labels" title="Link to this definition">¶</a></dt>
+<dd><p>ListProperty(defaultvalue=0, <a href="#id3"><span class="problematic" id="id4">**</span></a>kw)
+Property that represents a list.</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><cite>defaultvalue</cite>: list, defaults to []</dt><dd><p>Specifies the default value of the property.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>When assigning a list to a <code class="xref py py-class docutils literal notranslate"><span class="pre">ListProperty</span></code>, the list stored in
+the property is a shallow copy of the list and not the original list. This can
+be demonstrated with the following example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyWidget</span><span class="p">(</span><span class="n">Widget</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">my_list</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([])</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">widget</span> <span class="o">=</span> <span class="n">MyWidget</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;hi&#39;</span><span class="p">:</span> <span class="s1">&#39;hello&#39;</span><span class="p">}]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">widget</span><span class="o">.</span><span class="n">my_list</span> <span class="o">=</span> <span class="n">my_list</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">my_list</span> <span class="ow">is</span> <span class="n">widget</span><span class="o">.</span><span class="n">my_list</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">my_list</span><span class="p">,</span> <span class="n">widget</span><span class="o">.</span><span class="n">my_list</span><span class="p">)</span>
+<span class="go">[1, 5, {&#39;hi&#39;: &#39;hello&#39;}, 10] [1, 5, {&#39;hi&#39;: &#39;hello&#39;}]</span>
+</pre></div>
+</div>
+<p>However, changes to nested levels will affect the property as well,
+since the property uses a shallow copy of my_list.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">my_list</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="s1">&#39;hi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;bye&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">my_list</span><span class="p">,</span> <span class="n">widget</span><span class="o">.</span><span class="n">my_list</span><span class="p">)</span>
+<span class="go">[1, 5, {&#39;hi&#39;: &#39;bye&#39;}, 10] [1, 5, {&#39;hi&#39;: &#39;bye&#39;}]</span>
+</pre></div>
+</div>
+</div>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.view.tabs.createassettab.createassettab.CreateAssetTab.on_template_create">
+<span class="sig-name descname"><span class="pre">on_template_create</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.view.tabs.createassettab.createassettab.CreateAssetTab.on_template_create" title="Link to this definition">¶</a></dt>
+<dd><p>Initiates the creation process.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.view.tabs.createassettab.createassettab.CreateAssetTab.open_filebrowser">
+<span class="sig-name descname"><span class="pre">open_filebrowser</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.view.tabs.createassettab.createassettab.CreateAssetTab.open_filebrowser" title="Link to this definition">¶</a></dt>
+<dd><p>Opens the file chooser dialog.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.view.tabs.createassettab.createassettab.CreateAssetTab.filename_callback">
+<span class="sig-name descname"><span class="pre">filename_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.view.tabs.createassettab.createassettab.CreateAssetTab.filename_callback" title="Link to this definition">¶</a></dt>
+<dd><p>Callback to receive a filepath.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filepath</strong> (<em>pathlib.Path</em>) – </p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.view.tabs.createassettab.createassettab.CreateAssetTab.model">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#src.view.tabs.createassettab.createassettab.CreateAssetTab.model" title="Link to this definition">¶</a></dt>
+<dd><p>Retrieve the current model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.view.tabs.createassettab.createassettab.CreateAssetTab.filter_model">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">filter_model</span></span><a class="headerlink" href="#src.view.tabs.createassettab.createassettab.CreateAssetTab.filter_model" title="Link to this definition">¶</a></dt>
+<dd><p>Filter the dropdown menu.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.view.tabs.createassettab.createassettab.CreateAssetTab.quantity">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">quantity</span></span><a class="headerlink" href="#src.view.tabs.createassettab.createassettab.CreateAssetTab.quantity" title="Link to this definition">¶</a></dt>
+<dd><p>The quantity for asset creation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.view.tabs.createassettab.createassettab.CreateAssetTab.status_label">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">status_label</span></span><a class="headerlink" href="#src.view.tabs.createassettab.createassettab.CreateAssetTab.status_label" title="Link to this definition">¶</a></dt>
+<dd><p>Retrieve the status label.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.view.tabs.createassettab.createassettab.CreateAssetTab.filter_status_label">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">filter_status_label</span></span><a class="headerlink" href="#src.view.tabs.createassettab.createassettab.CreateAssetTab.filter_status_label" title="Link to this definition">¶</a></dt>
+<dd><p>Filter the dropdown menu.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.view.tabs.createassettab.createassettab.CreateAssetTab.filepath">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">filepath</span></span><a class="headerlink" href="#src.view.tabs.createassettab.createassettab.CreateAssetTab.filepath" title="Link to this definition">¶</a></dt>
+<dd><p>The path or filename of the new CSV to be created.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pathlib.Path</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.view.tabs.createassettab.createassettab.CreateAssetTab.autostart">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">autostart</span></span><a class="headerlink" href="#src.view.tabs.createassettab.createassettab.CreateAssetTab.autostart" title="Link to this definition">¶</a></dt>
+<dd><p>Determine if Excel should be automatically invoked.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.view.tabs.createassettab.createassettab.CreateAssetTab.auto_upload">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">auto_upload</span></span><a class="headerlink" href="#src.view.tabs.createassettab.createassettab.CreateAssetTab.auto_upload" title="Link to this definition">¶</a></dt>
+<dd><p>Determine if CSV should be automatically uploaded.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Snipe-IT Bulk Import</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="filebrowser.html"><code class="docutils literal notranslate"><span class="pre">FileBrowser</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="progress.html"><code class="docutils literal notranslate"><span class="pre">ProgressInfo</span></code></a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">CreateAssetTab</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#src.view.tabs.createassettab.createassettab.CreateAssetTab.models"><code class="docutils literal notranslate"><span class="pre">CreateAssetTab.models</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#src.view.tabs.createassettab.createassettab.CreateAssetTab.selected_models"><code class="docutils literal notranslate"><span class="pre">CreateAssetTab.selected_models</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#src.view.tabs.createassettab.createassettab.CreateAssetTab.status_labels"><code class="docutils literal notranslate"><span class="pre">CreateAssetTab.status_labels</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#src.view.tabs.createassettab.createassettab.CreateAssetTab.selected_status_labels"><code class="docutils literal notranslate"><span class="pre">CreateAssetTab.selected_status_labels</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#src.view.tabs.createassettab.createassettab.CreateAssetTab.on_template_create"><code class="docutils literal notranslate"><span class="pre">CreateAssetTab.on_template_create()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#src.view.tabs.createassettab.createassettab.CreateAssetTab.open_filebrowser"><code class="docutils literal notranslate"><span class="pre">CreateAssetTab.open_filebrowser()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#src.view.tabs.createassettab.createassettab.CreateAssetTab.filename_callback"><code class="docutils literal notranslate"><span class="pre">CreateAssetTab.filename_callback()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#src.view.tabs.createassettab.createassettab.CreateAssetTab.model"><code class="docutils literal notranslate"><span class="pre">CreateAssetTab.model</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#src.view.tabs.createassettab.createassettab.CreateAssetTab.filter_model"><code class="docutils literal notranslate"><span class="pre">CreateAssetTab.filter_model</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#src.view.tabs.createassettab.createassettab.CreateAssetTab.quantity"><code class="docutils literal notranslate"><span class="pre">CreateAssetTab.quantity</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#src.view.tabs.createassettab.createassettab.CreateAssetTab.status_label"><code class="docutils literal notranslate"><span class="pre">CreateAssetTab.status_label</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#src.view.tabs.createassettab.createassettab.CreateAssetTab.filter_status_label"><code class="docutils literal notranslate"><span class="pre">CreateAssetTab.filter_status_label</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#src.view.tabs.createassettab.createassettab.CreateAssetTab.filepath"><code class="docutils literal notranslate"><span class="pre">CreateAssetTab.filepath</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#src.view.tabs.createassettab.createassettab.CreateAssetTab.autostart"><code class="docutils literal notranslate"><span class="pre">CreateAssetTab.autostart</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#src.view.tabs.createassettab.createassettab.CreateAssetTab.auto_upload"><code class="docutils literal notranslate"><span class="pre">CreateAssetTab.auto_upload</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="uploadtab.html"><code class="docutils literal notranslate"><span class="pre">UploadTab</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="checkouttab.html"><code class="docutils literal notranslate"><span class="pre">CheckoutTab</span></code></a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="progress.html" title="previous chapter">&lt;no title&gt;</a></li>
+      <li>Next: <a href="uploadtab.html" title="next chapter">&lt;no title&gt;</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Matthias Stefan.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="_sources/createassettab.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
