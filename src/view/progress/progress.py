@@ -101,9 +101,3 @@ class ProgressInfo(MDAnchorLayout):
     def info(self, value):
         self._info = value
         self.ids.lb_progress_info.text = value
-
-
-
-
-
-

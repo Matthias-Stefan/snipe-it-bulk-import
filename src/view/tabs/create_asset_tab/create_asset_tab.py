@@ -1,11 +1,13 @@
 __author__ = "Matthias Stefan"
 __version__ = "0.2.0"
 
+from globals import Globals
 from src.view.file_browser import FileBrowser
 
 import os
 
-from kivy.properties import ListProperty
+from kivy.lang import Builder
+from kivy.properties import ListProperty, ObjectProperty
 from kivymd.uix.tab import MDTabsBase
 from kivymd.uix.floatlayout import MDFloatLayout
 from pathlib import Path
@@ -18,6 +20,7 @@ class CreateAssetTab(MDFloatLayout, MDTabsBase):
 
     :param kwargs: Extra keyword arguments passed to the super constructor.
     """
+    controller = ObjectProperty()
 
     models = [f"value_t{i}" for i in range(5)]+[f"test{i}" for i in range(5)]
     selected_models = ListProperty(models)
@@ -176,3 +179,6 @@ class CreateAssetTab(MDFloatLayout, MDTabsBase):
     @auto_upload.setter
     def auto_upload(self, value):
         self._auto_upload = value
+
+
+Builder.load_file(os.path.join(Globals.get_create_asset_tab_package(), "create_asset_tab.kv"))

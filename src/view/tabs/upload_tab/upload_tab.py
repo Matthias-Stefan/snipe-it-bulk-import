@@ -1,10 +1,13 @@
 __author__ = "Matthias Stefan"
 __version__ = "0.1.0"
 
+from globals import Globals
 from src.view.file_browser import FileBrowser
 
 import os
 
+from kivy.lang import Builder
+from kivy.properties import ObjectProperty
 from kivymd.uix.tab import MDTabsBase
 from kivymd.uix.floatlayout import MDFloatLayout
 from pathlib import Path
@@ -15,6 +18,7 @@ class UploadTab(MDFloatLayout, MDTabsBase):
 
     :param kwargs: Extra keyword arguments passed to the super constructor.
     """
+    controller = ObjectProperty()
 
     def __init__(self, **kwargs):
         super(UploadTab, self).__init__(**kwargs)
@@ -63,3 +67,4 @@ class UploadTab(MDFloatLayout, MDTabsBase):
             self._filepath = path
 
 
+Builder.load_file(os.path.join(Globals.get_upload_tab_package(), "upload_tab.kv"))

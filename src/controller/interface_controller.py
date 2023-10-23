@@ -21,3 +21,8 @@ class IController(abc.ABC):
     @abc.abstractmethod
     def view(self):
         pass
+
+    @property
+    @abc.abstractmethod
+    def model(self):
+        pass

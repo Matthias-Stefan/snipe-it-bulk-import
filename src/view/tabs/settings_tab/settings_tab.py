@@ -1,6 +1,12 @@
 __author__ = "Matthias Stefan"
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
+from globals import Globals
+
+import os
+
+from kivy.lang import Builder
+from kivy.properties import ObjectProperty
 from kivymd.uix.tab import MDTabsBase
 from kivymd.uix.floatlayout import MDFloatLayout
 
@@ -11,6 +17,8 @@ class SettingsTab(MDFloatLayout, MDTabsBase):
 
     :param kwargs: Extra keyword arguments passed to the super constructor.
     """
+    controller = ObjectProperty()
+
     def __init__(self, **kwargs):
         super(SettingsTab, self).__init__(**kwargs)
         self.title = "Settings"
@@ -79,3 +87,6 @@ class SettingsTab(MDFloatLayout, MDTabsBase):
     def predefine_output_folder(self, value):
         self._predefine_output_folder = value
         self.ids.tf_predefine_output_folder.text = value
+
+
+Builder.load_file(os.path.join(Globals.get_settings_tab_package(), "settings_tab.kv"))

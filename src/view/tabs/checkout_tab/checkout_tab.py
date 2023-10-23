@@ -1,10 +1,13 @@
 __author__ = "Matthias Stefan"
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
+from globals import Globals
 from src.view.file_browser import FileBrowser
 
 import os
 
+from kivy.lang import Builder
+from kivy.properties import ObjectProperty
 from kivymd.uix.tab import MDTabsBase
 from kivymd.uix.floatlayout import MDFloatLayout
 from pathlib import Path
@@ -17,6 +20,7 @@ class CheckoutTab(MDFloatLayout, MDTabsBase):
 
     :param kwargs: Extra keyword arguments passed to the super constructor.
     """
+    controller = ObjectProperty()
 
     def __init__(self, **kwargs):
         super(CheckoutTab, self).__init__(**kwargs)
@@ -89,3 +93,5 @@ class CheckoutTab(MDFloatLayout, MDTabsBase):
     def auto_upload(self, value):
         self._auto_upload = value
 
+
+Builder.load_file(os.path.join(Globals.get_checkout_tab_package(), "checkout_tab.kv"))

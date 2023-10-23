@@ -11,25 +11,39 @@ from src.view import MainView
 
 class MainController(IController):
     def __init__(self):
-        self._view = MainView(controller=self)
-
-        self._checkout_controller: IController = CheckoutController()
-
         self._create_asset_controller: IController = CreateAssetController()
-        self._create_asset_controller.progress_events.reset += self._view.reset_progress
-        self._create_asset_controller.progress_events.advance += self._view.advance_progress
-
-        self._settings_controller: IController = SettingsController()
+        self._checkout_controller: IController = CheckoutController()
         self._upload_controller: IController = UploadController()
+        self._settings_controller: IController = SettingsController()
 
-        self._create_asset_controller.execute()
+        self._main_view = MainView(self._create_asset_controller.view,
+                                   self._checkout_controller.view,
+                                   self._upload_controller.view,
+                                   self._settings_controller.view,
+                                   controller=self)
+
+        self._create_asset_controller.progress_events.reset += self._main_view.reset_progress
+        self._create_asset_controller.progress_events.advance += self._main_view.advance_progress
+
+        self._checkout_controller.progress_events.reset += self._main_view.reset_progress
+        self._checkout_controller.progress_events.advance += self._main_view.advance_progress
+
+        self._upload_controller.progress_events.reset += self._main_view.reset_progress
+        self._upload_controller.progress_events.advance += self._main_view.advance_progress
+
+        self._settings_controller.progress_events.reset += self._main_view.reset_progress
+        self._settings_controller.progress_events.advance += self._main_view.advance_progress
 
     def execute(self, **kwargs):
         return
 
     @property
     def view(self):
-        return self._view
+        return self._main_view
+
+    @property
+    def model(self):
+        return
 
 
 
