@@ -22,3 +22,4 @@ class IController(abc.ABC):
     @abc.abstractmethod
     def model(self):
         pass
+

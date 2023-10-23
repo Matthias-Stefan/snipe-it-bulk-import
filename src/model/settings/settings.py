@@ -1,88 +1,62 @@
 __author__ = "Matthias Stefan"
 __version__ = "0.1.0"
 
-from globals import Globals
-from src.model import IModel
-
-import dotenv
-import os
-import sys
-
-from datetime import datetime
+from src.model import IModel, ModelProperties
 
 
 class Settings(IModel):
     def __init__(self):
-        self._dotenv_file = os.path.join(Globals.get_settings_package(), ".env")
-        try:
-            if len(dotenv.find_dotenv(self._dotenv_file)) > 0:
-                self._config = dotenv.dotenv_values(self._dotenv_file)
-                self._validate_directory_paths()
-        except IOError as error:
-            print(error)
-            sys.exit()
-
-    def _validate_directory_paths(self):
-        if not os.path.exists(self.output_dir):
-            default_path = os.path.join(Globals.get_project_dir(), "output")
-            if not os.path.exists(default_path):
-                os.mkdir(default_path)
-                self.output_dir = default_path
-        if not os.path.exists(self.excel_path):
-            self.excel_path = ''
-        if not os.path.exists(self.logs_dir):
-            default_path = os.path.join(Globals.get_project_dir(), "logs")
-            if not os.path.exists(default_path):
-                os.mkdir(default_path)
-                self.logs_dir = default_path
-
-    def update_timestamp(self):
-        current_time = datetime.now()
-        timestamp = current_time.strftime("%Y-%m-%d %H:%M:%S")
-        dotenv.set_key(self._dotenv_file, "timestamp", timestamp)
+        self._url = ""
+        self._token = ""
+        self._output_dir = ""
+        self._excel_path = ""
+        self._logs_dir = ""
 
     @property
     def url(self):
-        return self._config.get("url")
+        return self._url
 
     @url.setter
     def url(self, value):
-        dotenv.set_key(self._dotenv_file, "url", value)
-        self.update_timestamp()
+        if isinstance(value, str) and value != self._url:
+            self._url = value
+            self.model_events.on_changed(ModelProperties.URL, self._url)
 
     @property
     def token(self):
-        return self._config.get("token")
+        return self._token
 
     @token.setter
     def token(self, value):
-        dotenv.set_key(self._dotenv_file, "token", value)
-        self.update_timestamp()
+        if isinstance(value, str) and value != self._token:
+            self._token = value
+            self.model_events.on_changed(ModelProperties.TOKEN, self._token)
 
     @property
     def output_dir(self):
-        return self._config.get("output_dir")
+        return self._output_dir
 
     @output_dir.setter
     def output_dir(self, value):
-        dotenv.set_key(self._dotenv_file, "output_dir", value)
-        self.update_timestamp()
+        if isinstance(value, str) and value != self._output_dir:
+            self._output_dir = value
+            self.model_events.on_changed(ModelProperties.OUTPUT_DIR, self._output_dir)
 
     @property
     def excel_path(self):
-        return self._config.get("excel_path")
+        return self._excel_path
 
     @excel_path.setter
     def excel_path(self, value):
-        dotenv.set_key(self._dotenv_file, "excel_path", value)
-        self.update_timestamp()
+        if isinstance(value, str) and value != self._excel_path:
+            self._excel_path = value
+            self.model_events.on_changed(ModelProperties.EXCEL_PATH, self._excel_path)
 
     @property
     def logs_dir(self):
-        return self._config.get("logs_dir")
+        return self._logs_dir
 
     @logs_dir.setter
     def logs_dir(self, value):
-        dotenv.set_key(self._dotenv_file, "logs_dir", value)
-        self.update_timestamp()
-        self.model_events.on_changed()
+        if isinstance(value, str) and value != self._logs_dir:
+            self._logs_dir = value

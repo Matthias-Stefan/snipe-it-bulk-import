@@ -2,13 +2,12 @@ __author__ = "Matthias Stefan"
 __version__ = "0.1.1"
 
 from globals import Globals
-from src.controller import IController
-from src.model import IModel
+#from src.controller import IController
+from src.model import IModel, ModelProperties
 
 import os
 
 from kivy.lang import Builder
-from kivy.properties import ObjectProperty
 from kivymd.uix.tab import MDTabsBase
 from kivymd.uix.floatlayout import MDFloatLayout
 
@@ -19,82 +18,36 @@ class SettingsTab(MDFloatLayout, MDTabsBase):
 
     :param kwargs: Extra keyword arguments passed to the super constructor.
     """
-    def __init__(self, controller: IController, model: IModel, **kwargs):
+    def __init__(self, controller, model: IModel, **kwargs):
         super(SettingsTab, self).__init__(**kwargs)
         self.controller = controller
         self.model = model
-        self.model.model_events += self.on_model_changed_callback
+        self.model.model_events.on_changed += self.on_model_changed_callback
 
         self.title = "Settings"
         self.icon = "cog"
 
-        self._url = ""
-        self._token = ""
-        self._excel_path = ""
-        self._predefine_output_folder = ""
+    def set_url(self, url):
+        self.controller.url = url
 
-    def on_save(self):
-        """Initiates the save process.
+    def set_token(self, token):
+        self.controller.token = token
 
-        :rtype: None
-        """
-        pass
+    def set_excel_path(self, excel_path):
+        self.controller.excel_path = excel_path
 
-    @property
-    def url(self):
-        """Retrieve the current url.
+    def set_output_folder(self, output_folder):
+        self.controller.output_folder = output_folder
 
-        :rtype: None
-        """
-        return self._url
-
-    @url.setter
-    def url(self, value):
-
-        self._url = value
-        self.ids.tf_url.text = value
-
-    @property
-    def token(self):
-        """Retrieve the current token.
-
-        :rtype: None
-        """
-        return self._token
-
-    @token.setter
-    def token(self, value):
-        self._token = value
-        self.ids.tf_token.text = value
-
-    @property
-    def excel_path(self):
-        """Retrieve the current excel path.
-
-        :rtype: None
-        """
-        return self._excel_path
-
-    @excel_path.setter
-    def excel_path(self, value):
-        self._excel_path = value
-        self.ids.tf_excel_path.text = value
-
-    @property
-    def predefine_output_folder(self):
-        """Retrieve the defined output folder.
-
-        :rtype: None
-        """
-        return self._predefine_output_folder
-
-    @predefine_output_folder.setter
-    def predefine_output_folder(self, value):
-        self._predefine_output_folder = value
-        self.ids.tf_predefine_output_folder.text = value
-
-    def on_model_changed_callback(self):
-        pass
+    def on_model_changed_callback(self, model_property: ModelProperties, value):
+        if model_property == ModelProperties.URL:
+            self.ids.tf_url.text = value
+        elif model_property == ModelProperties.TOKEN:
+            self.ids.tf_token.text = value
+        elif model_property == ModelProperties.OUTPUT_DIR:
+            self.ids.tf_output_folder.text = value
+        elif model_property == ModelProperties.EXCEL_PATH:
+            self.ids.tf_excel_path.text = value
 
 
 Builder.load_file(os.path.join(Globals.get_settings_tab_package(), "settings_tab.kv"))
