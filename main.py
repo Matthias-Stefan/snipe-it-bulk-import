@@ -19,7 +19,6 @@ class Main(MDApp):
         self.title = "Snipe-IT Bulk Import"
 
         self.controller = MainController()
-        self.settings = Settings()
 
     def build(self):
         return self.controller.view

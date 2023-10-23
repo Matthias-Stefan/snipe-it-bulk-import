@@ -9,7 +9,7 @@ from src.view.tabs import SettingsTab
 class SettingsController(IController):
     def __init__(self):
         self._model = Settings()
-        self._view = SettingsTab(controller=self)
+        self._view = SettingsTab(controller=self, model=self._model)
 
     def execute(self, **kwargs):
         self.progress_events.reset()

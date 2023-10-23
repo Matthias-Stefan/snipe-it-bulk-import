@@ -2,6 +2,8 @@ __author__ = "Matthias Stefan"
 __version__ = "0.1.1"
 
 from globals import Globals
+from src.controller import IController
+from src.model import IModel
 
 import os
 
@@ -17,10 +19,12 @@ class SettingsTab(MDFloatLayout, MDTabsBase):
 
     :param kwargs: Extra keyword arguments passed to the super constructor.
     """
-    controller = ObjectProperty()
-
-    def __init__(self, **kwargs):
+    def __init__(self, controller: IController, model: IModel, **kwargs):
         super(SettingsTab, self).__init__(**kwargs)
+        self.controller = controller
+        self.model = model
+        self.model.model_events += self.on_model_changed_callback
+
         self.title = "Settings"
         self.icon = "cog"
 
@@ -46,6 +50,7 @@ class SettingsTab(MDFloatLayout, MDTabsBase):
 
     @url.setter
     def url(self, value):
+
         self._url = value
         self.ids.tf_url.text = value
 
@@ -87,6 +92,9 @@ class SettingsTab(MDFloatLayout, MDTabsBase):
     def predefine_output_folder(self, value):
         self._predefine_output_folder = value
         self.ids.tf_predefine_output_folder.text = value
+
+    def on_model_changed_callback(self):
+        pass
 
 
 Builder.load_file(os.path.join(Globals.get_settings_tab_package(), "settings_tab.kv"))

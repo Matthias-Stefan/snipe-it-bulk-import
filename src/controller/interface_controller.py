@@ -1,13 +1,9 @@
 __author__ = "Matthias Stefan"
 __version__ = "0.1.0"
 
+from src.utility import ProgressEvents
+
 import abc
-
-from events.events import Events
-
-
-class ProgressEvents(Events):
-    __events__ = ('advance', 'reset')
 
 
 class IController(abc.ABC):

@@ -2,6 +2,7 @@ __author__ = "Matthias Stefan"
 __version__ = "0.1.0"
 
 from globals import Globals
+from src.model import IModel
 
 import dotenv
 import os
@@ -10,7 +11,7 @@ import sys
 from datetime import datetime
 
 
-class Settings:
+class Settings(IModel):
     def __init__(self):
         self._dotenv_file = os.path.join(Globals.get_settings_package(), ".env")
         try:
@@ -84,6 +85,4 @@ class Settings:
     def logs_dir(self, value):
         dotenv.set_key(self._dotenv_file, "logs_dir", value)
         self.update_timestamp()
-
-
-
+        self.model_events.on_changed()
