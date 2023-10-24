@@ -17,7 +17,6 @@
 
         Spinner:
             id: sp_model
-            text: root.sit_models[0] if not None else ""
             values: root.selected_sit_models
             on_text: root.set_sit_model(self.text)
             size_hint_x: 4.6
@@ -55,7 +54,6 @@
 
         Spinner:
             id: sp_status_label
-            text: root.status_labels[0] if not None else ""
             values: root.selected_status_labels
             on_text: root.set_status_label(self.text)
 

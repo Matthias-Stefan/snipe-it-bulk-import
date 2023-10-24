@@ -10,6 +10,9 @@ class CheckoutController(IController):
         super(CheckoutController, self).__init__(parent)
         self._view = CheckoutTab(controller=self)
 
+    def post_init(self):
+        return
+
     def execute(self, **kwargs):
         self.progress_events.reset()
         # ...

@@ -10,6 +10,9 @@ class UploadController(IController):
         super(UploadController, self).__init__(parent)
         self._view = UploadTab(controller=self)
 
+    def post_init(self):
+        return
+
     def execute(self, **kwargs):
         pass
 

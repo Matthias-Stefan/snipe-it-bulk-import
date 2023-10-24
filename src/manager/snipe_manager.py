@@ -4,11 +4,9 @@ __version__ = "0.1.0"
 import sys
 import time
 
-from src.controller import SettingsController
-from src.utility import Singleton, TooManyRequestsError
+from src.utility import Singleton, TooManyRequestsError, profile_function
 
 import requests
-import threading
 
 from typing import Callable
 from queue import Queue
@@ -46,7 +44,6 @@ class SnipeManager:
         self._url = None
         self._token = None
         self._header = None
-        self._lock: threading.Lock = threading.Lock()
 
     @staticmethod
     def http_validation(callback: Callable):
@@ -67,7 +64,7 @@ class SnipeManager:
             return response
         return wrapper
 
-    def init(self, url, token):
+    def post_init(self, url, token):
         self._url = url
         self._token = token
         self._header = {"Authorization": f"Bearer {self._token}",
@@ -124,3 +121,32 @@ class SnipeManager:
         response = requests.patch(url=self._url+endpoint_url, json=payload, headers=self._header, verify=False)
         return response
 
+    @profile_function
+    def request_all_sit_models(self):
+        offset = 0
+        while True:
+            get_endpoint = Endpoint()
+            get_endpoint.value = '/models'
+            get_endpoint.callback = self.get
+            get_endpoint.payload = {'limit': 0, 'offset': offset}
+            response = self.execute_now(get_endpoint).json()
+            yield response['rows'], response['total']
+            offset += 500
+            if offset < response['total']:
+                continue
+            break
+
+    @profile_function
+    def request_all_status_labels(self):
+        offset = 0
+        while True:
+            get_endpoint = Endpoint()
+            get_endpoint.value = '/statuslabels'
+            get_endpoint.callback = self.get
+            get_endpoint.payload = {'limit': 0, 'offset': offset}
+            response = self.execute_now(get_endpoint).json()
+            yield response['rows'], response['total']
+            offset += 500
+            if offset < response['total']:
+                continue
+            break

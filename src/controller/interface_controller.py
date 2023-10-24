@@ -13,6 +13,10 @@ class IController(abc.ABC):
         self.progress_events = ProgressEvents()
 
     @abc.abstractmethod
+    def post_init(self):
+        pass
+
+    @abc.abstractmethod
     def execute(self, **kwargs):
         pass
 

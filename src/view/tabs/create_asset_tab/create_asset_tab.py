@@ -22,11 +22,8 @@ class CreateAssetTab(MDFloatLayout, MDTabsBase):
     :param kwargs: Extra keyword arguments passed to the super constructor.
     """
 
-    sit_models = [f"value_t{i}" for i in range(5)] + [f"test{i}" for i in range(5)]
-    selected_sit_models = ListProperty(sit_models)
-
-    status_labels = ["Undeployable", "Deployable", "Archived", "Pending"]
-    selected_status_labels = ListProperty(status_labels)
+    selected_sit_models = ListProperty()
+    selected_status_labels = ListProperty()
 
     def __init__(self, controller, model: IModel, **kwargs):
         super(CreateAssetTab, self).__init__(**kwargs)
@@ -65,11 +62,21 @@ class CreateAssetTab(MDFloatLayout, MDTabsBase):
         self.set_filepath(filepath)
         self.ids.tf_file.text = str(filepath)
 
+    def set_sit_models(self, sit_models: dict):
+        self.selected_sit_models = [key for key in sit_models.keys()]
+        self.ids.sp_model.text = self.selected_sit_models[0]
+        self.set_sit_model(self.selected_sit_models[0])
+
     def set_sit_model(self, value):
         self.controller.sit_model = value
 
     def set_quantity(self, value):
         self.controller.quantity = value
+
+    def set_status_labels(self, status_labels: dict):
+        self.selected_status_labels = [key for key in status_labels.keys()]
+        self.ids.sp_status_label.text = self.selected_status_labels[0]
+        self.set_status_label(self.selected_status_labels[0])
 
     def set_status_label(self, value):
         self.controller.status_label = value
@@ -96,10 +103,11 @@ class CreateAssetTab(MDFloatLayout, MDTabsBase):
         self.ids.sp_model.is_open = True
         self._filter_sit_model = value
         if len(str(value)) > 0:
-            selected_sit_models = [elem for elem in self.sit_models if elem.find(self._filter_sit_model) != -1]
+            selected_sit_models = [elem for elem in self.controller.sit_models.keys() if
+                                   elem.find(self._filter_sit_model) != -1]
             self.selected_sit_models = selected_sit_models
         else:
-            self.selected_sit_models = self.sit_models
+            self.selected_sit_models = [elem for elem in self.controller.sit_models.keys()]
 
     @property
     def filter_status_label(self):

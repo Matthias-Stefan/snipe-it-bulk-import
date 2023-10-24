@@ -13,30 +13,22 @@ from typing import cast
 
 class MainController(IController):
     def __init__(self):
-        self._settings_controller: IController = SettingsController(self)
-        self._create_asset_controller: IController = CreateAssetController(self)
-        self._checkout_controller: IController = CheckoutController(self)
-        self._upload_controller: IController = UploadController(self)
+        self._children: list[IController] = [SettingsController(self),
+                                             CreateAssetController(self),
+                                             CheckoutController(self),
+                                             UploadController(self)]
 
-        self._main_view = MainView(self._create_asset_controller.view,
-                                   self._checkout_controller.view,
-                                   self._upload_controller.view,
-                                   self._settings_controller.view,
+        self._main_view = MainView(self._children[0].view,
+                                   self._children[1].view,
+                                   self._children[2].view,
+                                   self._children[3].view,
                                    controller=self)
 
-        self._settings_controller.progress_events.reset += self._main_view.reset_progress
-        self._settings_controller.progress_events.advance += self._main_view.advance_progress
-
-        self._create_asset_controller.progress_events.reset += self._main_view.reset_progress
-        self._create_asset_controller.progress_events.advance += self._main_view.advance_progress
-
-        self._checkout_controller.progress_events.reset += self._main_view.reset_progress
-        self._checkout_controller.progress_events.advance += self._main_view.advance_progress
-
-        self._upload_controller.progress_events.reset += self._main_view.reset_progress
-        self._upload_controller.progress_events.advance += self._main_view.advance_progress
-
-
+    def post_init(self):
+        for controller in self._children:
+            controller.progress_events.reset += self._main_view.reset_progress
+            controller.progress_events.advance += self._main_view.advance_progress
+            controller.post_init()
 
     def execute(self, **kwargs):
         return
@@ -50,5 +42,8 @@ class MainController(IController):
         return
 
     def get_settings_controller(self) -> SettingsController:
-        return cast(SettingsController, self._settings_controller)
+        return cast(SettingsController, self._children[0])
+
+    def get_create_asset_controller(self) -> CreateAssetController:
+        return cast(CreateAssetController, self._children[1])
 

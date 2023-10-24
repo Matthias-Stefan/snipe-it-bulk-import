@@ -27,11 +27,15 @@ class SettingsController(IController):
 
         self._model = Settings()
         self._view = SettingsTab(controller=self, model=self.model)
+
         self._model.url = self._config.get("url")
         self._model.token = self._config.get("token")
         self._model.output_dir = self._config.get("output_dir")
         self._model.excel_path = self._config.get("excel_path")
         self._model.logs_dir = self._config.get("logs_dir")
+
+    def post_init(self):
+        return
 
     def execute(self, **kwargs):
         return
@@ -66,6 +70,8 @@ class SettingsController(IController):
     def create_folder(path: Path):
         if not os.path.exists(path):
             os.mkdir(path)
+            return True
+        return False
 
     def update_timestamp(self):
         current_time = datetime.now()
@@ -123,11 +129,13 @@ class SettingsController(IController):
         if self.validate_output_dir(value):
             self.model.output_dir = value
             dotenv.set_key(self._dotenv_file, "output_dir", value)
-            self.create_folder(value)
-            self.update_timestamp()
-            self.progress_events.advance(100, f"Created output directory successfully")
+            if self.create_folder(value):
+                self.update_timestamp()
+                self.progress_events.advance(100, f"Created output directory successfully: {value}")
+            else:
+                self.progress_events.advance(100, f"Set output directory successfully: {value}")
         else:
-            self.progress_events.advance(100, f"Failed to create output directory", False)
+            self.progress_events.advance(100, f"Failed to create output directory: {value}", False)
 
     @property
     def excel_path(self):
@@ -141,9 +149,9 @@ class SettingsController(IController):
             self.model.excel_path = value
             dotenv.set_key(self._dotenv_file, "excel_path", value)
             self.update_timestamp()
-            self.progress_events.advance(100, f"Set excel path successfully")
+            self.progress_events.advance(100, f"Set excel path successfully: {value}")
         else:
-            self.progress_events.advance(100, f"Failed to set excel path", False)
+            self.progress_events.advance(100, f"Failed to set excel path: {value}", False)
 
     @property
     def logs_dir(self):
