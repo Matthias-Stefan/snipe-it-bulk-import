@@ -28,13 +28,15 @@ class ProgressInfo(MDAnchorLayout):
         self.color = colors["Red"]["700"]
         self.info = ""
 
-    def advance(self, amount: int, info: str):
+    def advance(self, amount: int, info: str, state: bool=True):
         """Advance progress.
 
         :param amount: The amount to advance the progress.
         :type amount: int
         :param info: Information about the progress.
         :type: info: str
+        :param state: Information about the state.
+        :type: state: bool
         :rtype: None
         """
         assert self._value <= 100
@@ -48,6 +50,9 @@ class ProgressInfo(MDAnchorLayout):
         self.info = info
         if self.value == 100:
             self.is_active = False
+        if not state:
+            self.color = colors["Red"]["700"]
+
 
     @property
     def is_active(self):

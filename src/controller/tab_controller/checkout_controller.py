@@ -1,12 +1,13 @@
 __author__ = "Matthias Stefan"
 __version__ = "0.1.0"
 
-from src.controller.interface_controller import IController
+from src.controller import IController
 from src.view.tabs import CheckoutTab
 
 
 class CheckoutController(IController):
-    def __init__(self):
+    def __init__(self, parent=None):
+        super(CheckoutController, self).__init__(parent)
         self._view = CheckoutTab(controller=self)
 
     def execute(self, **kwargs):

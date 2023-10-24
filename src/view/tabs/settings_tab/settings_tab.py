@@ -2,7 +2,6 @@ __author__ = "Matthias Stefan"
 __version__ = "0.1.1"
 
 from globals import Globals
-#from src.controller import IController
 from src.model import IModel, ModelProperties
 
 import os
@@ -37,7 +36,7 @@ class SettingsTab(MDFloatLayout, MDTabsBase):
         self.controller.excel_path = excel_path
 
     def set_output_folder(self, output_folder):
-        self.controller.output_folder = output_folder
+        self.controller.output_dir = output_folder
 
     def on_model_changed_callback(self, model_property: ModelProperties, value):
         if model_property == ModelProperties.URL:

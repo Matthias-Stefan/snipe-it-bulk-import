@@ -2,6 +2,7 @@ __author__ = "Matthias Stefan"
 __version__ = "0.2.0"
 
 from globals import Globals
+from src.model import IModel, ModelProperties
 from src.view.file_browser import FileBrowser
 
 import os
@@ -20,27 +21,23 @@ class CreateAssetTab(MDFloatLayout, MDTabsBase):
 
     :param kwargs: Extra keyword arguments passed to the super constructor.
     """
-    controller = ObjectProperty()
 
-    models = [f"value_t{i}" for i in range(5)]+[f"test{i}" for i in range(5)]
-    selected_models = ListProperty(models)
+    sit_models = [f"value_t{i}" for i in range(5)] + [f"test{i}" for i in range(5)]
+    selected_sit_models = ListProperty(sit_models)
 
     status_labels = ["Undeployable", "Deployable", "Archived", "Pending"]
     selected_status_labels = ListProperty(status_labels)
 
-    def __init__(self, **kwargs):
+    def __init__(self, controller, model: IModel, **kwargs):
         super(CreateAssetTab, self).__init__(**kwargs)
+        self.controller = controller
+        self.model = model
+        self.model.model_events.on_changed += self.on_model_changed_callback
+
         self.title = "Create Asset Template"
         self.icon = "devices"
 
-        self._model = ""
-        self._quantity = 0
-        self._status_label = ""
-        self._filepath = None
-        self._autostart = False
-        self._auto_upload = False
-
-        self._filter_model = ""
+        self._filter_sit_model = ""
         self._filter_status_label = ""
 
     def on_template_create(self):
@@ -48,8 +45,7 @@ class CreateAssetTab(MDFloatLayout, MDTabsBase):
 
         :rtype: None
         """
-        x = 5
-        return
+        self.controller.execute()
 
     def open_filebrowser(self):
         """Opens the file chooser dialog.
@@ -66,63 +62,44 @@ class CreateAssetTab(MDFloatLayout, MDTabsBase):
         :type filepath: pathlib.Path
         :rtype: None
         """
-        self._filepath = filepath
-        self.ids.tf_file.text = str(self._filepath)
+        self.set_filepath(filepath)
+        self.ids.tf_file.text = str(filepath)
+
+    def set_sit_model(self, value):
+        self.controller.sit_model = value
+
+    def set_quantity(self, value):
+        self.controller.quantity = value
+
+    def set_status_label(self, value):
+        self.controller.status_label = value
+
+    def set_filepath(self, value):
+        self.controller.filepath = value
+
+    def set_autostart(self, value):
+        self.controller.autostart = value
+
+    def set_auto_upload(self, value):
+        self.controller.auto_upload = value
 
     @property
-    def model(self):
-        """Retrieve the current model.
-
-        :type: str
-        """
-        return self._model
-
-    @model.setter
-    def model(self, value):
-        self._model = value
-
-    @property
-    def filter_model(self):
+    def filter_sit_model(self):
         """Filter the dropdown menu.
 
         :type: str
         """
-        return self._filter_model
+        return self._filter_sit_model
 
-    @filter_model.setter
-    def filter_model(self, value):
+    @filter_sit_model.setter
+    def filter_sit_model(self, value):
         self.ids.sp_model.is_open = True
-        self._filter_model = value
+        self._filter_sit_model = value
         if len(str(value)) > 0:
-            selected_models = [elem for elem in self.models if elem.find(self._filter_model) != -1]
-            self.selected_models = selected_models
+            selected_sit_models = [elem for elem in self.sit_models if elem.find(self._filter_sit_model) != -1]
+            self.selected_sit_models = selected_sit_models
         else:
-            self.selected_models = self.models
-
-    @property
-    def quantity(self):
-        """The quantity for asset creation.
-
-        :type: int
-        """
-        return self._quantity
-
-    @quantity.setter
-    def quantity(self, value):
-        if value.isdigit():
-            self._quantity = int(value)
-
-    @property
-    def status_label(self):
-        """Retrieve the status label.
-
-        :type: str
-        """
-        return self._status_label
-
-    @status_label.setter
-    def status_label(self, value):
-        self._status_label = value
+            self.selected_sit_models = self.sit_models
 
     @property
     def filter_status_label(self):
@@ -142,43 +119,9 @@ class CreateAssetTab(MDFloatLayout, MDTabsBase):
         else:
             self.selected_status_labels = self.status_labels
 
-    @property
-    def filepath(self):
-        """The path or filename of the new CSV to be created.
-
-        :type: pathlib.Path
-        """
-        return self._filepath
-
-    @filepath.setter
-    def filepath(self, value):
-        path = Path(value)
-        if os.path.exists(path.parent.absolute()):
-            self._filepath = path
-
-    @property
-    def autostart(self):
-        """Determine if Excel should be automatically invoked.
-
-        :type: bool
-        """
-        return self._autostart
-
-    @autostart.setter
-    def autostart(self, value):
-        self._autostart = value
-
-    @property
-    def auto_upload(self):
-        """Determine if CSV should be automatically uploaded.
-
-        :type: bool
-        """
-        return self._auto_upload
-
-    @auto_upload.setter
-    def auto_upload(self, value):
-        self._auto_upload = value
+    def on_model_changed_callback(self, model_property: ModelProperties, value):
+        if model_property == ModelProperties.FILEPATH:
+            self.ids.tf_file.text = value
 
 
 Builder.load_file(os.path.join(Globals.get_create_asset_tab_package(), "create_asset_tab.kv"))

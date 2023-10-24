@@ -7,7 +7,10 @@ import abc
 
 
 class IController(abc.ABC):
-    progress_events = ProgressEvents()
+    @abc.abstractmethod
+    def __init__(self, parent=None):
+        self.parent: IController = parent
+        self.progress_events = ProgressEvents()
 
     @abc.abstractmethod
     def execute(self, **kwargs):
@@ -22,4 +25,3 @@ class IController(abc.ABC):
     @abc.abstractmethod
     def model(self):
         pass
-

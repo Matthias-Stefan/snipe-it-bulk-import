@@ -2,7 +2,7 @@ __author__ = "Matthias Stefan"
 __version__ = "0.1.0"
 
 from src.controller import MainController
-from src.model import Settings
+from src.manager import SnipeManager
 
 
 import kivy
@@ -19,6 +19,11 @@ class Main(MDApp):
         self.title = "Snipe-IT Bulk Import"
 
         self.controller = MainController()
+        """
+        self.snipe_manager = SnipeManager()
+        self.snipe_manager.init(self.controller.get_settings_controller().url,
+                                self.controller.get_settings_controller().token)
+        """
 
     def build(self):
         return self.controller.view

@@ -17,9 +17,9 @@
 
         Spinner:
             id: sp_model
-            text: root.models[0] if not None else ""
-            values: root.selected_models
-            on_text: root.model = self.text
+            text: root.sit_models[0] if not None else ""
+            values: root.selected_sit_models
+            on_text: root.set_sit_model(self.text)
             size_hint_x: 4.6
 
         MDTextField:
@@ -27,7 +27,7 @@
             mode: "rectangle"
             hint_text: "Filter Model"
             helper_text_mode: "persistent"
-            on_text: root.filter_model = self.text
+            on_text: root.filter_sit_model = self.text
             size_hint_x: 1.2
 
         # ////////////////////////////////////////
@@ -43,7 +43,7 @@
             helper_text_mode: "persistent"
             input_type: "number"
             input_filter: "int"
-            on_text: root.quantity = self.text
+            on_text: root.set_quantity(self.text)
 
         Widget:
 
@@ -57,7 +57,7 @@
             id: sp_status_label
             text: root.status_labels[0] if not None else ""
             values: root.selected_status_labels
-            on_text: root.status_label = self.text
+            on_text: root.set_status_label(self.text)
 
         MDTextField:
             id: tf_status_label
@@ -78,7 +78,7 @@
             hint_text: "Filename"
             helper_text: "Press the button to launch File Explorer"
             helper_text_mode: "persistent"
-            on_text: root.filepath = self.text
+            on_text: root.set_filepath(self.text)
 
         MDRoundFlatIconButton:
             text: "Open"
@@ -95,7 +95,7 @@
         MDCheckbox:
             size_hint: None, None
             size: "48dp", "48dp"
-            on_active: root.autostart = self.active
+            on_active: root.set_autostart(self.active)
 
         Widget:
 
@@ -108,7 +108,7 @@
         MDCheckbox:
             size_hint: None, None
             size: "48dp", "48dp"
-            on_active: root.auto_upload = self.active
+            on_active: root.set_auto_upload(self.active)
 
         Widget:
 

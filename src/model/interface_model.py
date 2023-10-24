@@ -13,6 +13,12 @@ class IModel(abc.ABC):
 
 
 class ModelProperties(Enum):
+    MODEL = 101,
+    QUANTITY = 102,
+    STATUS_LABEL = 103
+    FILEPATH = 104,
+    AUTOSTART = 105,
+    AUTO_UPLOAD = 106,
 
     URL = 401,
     TOKEN = 402,

@@ -22,8 +22,8 @@ class MainView(MDFloatLayout):
     def reset_progress(self):
         self.ids.progress_info.reset()
 
-    def advance_progress(self, amount, info):
-        self.ids.progress_info.advance(amount, info)
+    def advance_progress(self, amount, info, state=True):
+        self.ids.progress_info.advance(amount, info, state)
 
 
 Builder.load_file(os.path.join(Globals.get_view_package(), "main_view.kv"))
