@@ -122,7 +122,8 @@ class CreateAssetTab(MDFloatLayout, MDTabsBase):
         self.ids.sp_status_label.is_open = True
         self._filter_status_label = value
         if len(str(value)) > 0:
-            selected_status_labels = [elem for elem in self.status_labels if elem.find(self._filter_status_label) != -1]
+            selected_status_labels = [elem for elem in self.controller.status_labels.keys() if
+                                      elem.find(self._filter_status_label) != -1]
             self.selected_status_labels = selected_status_labels
         else:
             self.selected_status_labels = self.status_labels

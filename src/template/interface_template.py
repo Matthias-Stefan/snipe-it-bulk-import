@@ -3,9 +3,10 @@ __version__ = "0.1.0"
 
 
 import abc
+import pathlib
 
 
 class ITemplate(abc.ABC):
     @abc.abstractmethod
-    def __init__(self, options):
+    def create(self) -> pathlib.Path:
         pass

@@ -28,7 +28,7 @@ class ProgressInfo(MDAnchorLayout):
         self.color = colors["Red"]["700"]
         self.info = ""
 
-    def advance(self, amount: int, info: str, state: bool = True):
+    def advance(self, amount: int, info: str, state: bool):
         """Advance progress.
 
         :param amount: The amount to advance the progress.

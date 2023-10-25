@@ -4,10 +4,11 @@ __version__ = "0.1.0"
 from src.controller import IController
 from src.manager import SnipeManager
 from src.model.create_asset import CreateAsset
+from src.template import ITemplate, CreateAssetTemplate
 from src.view.tabs import CreateAssetTab
 
-from functools import partial
-from kivy.clock import Clock
+import subprocess
+import threading
 
 
 class CreateAssetController(IController):
@@ -21,30 +22,31 @@ class CreateAssetController(IController):
 
     def post_init(self):
         snipe_manager = SnipeManager()
-        self.progress_events.reset()
-        Clock.schedule_once(partial(self.progress_events.advance, 0, "Start fetching models"), 0)
+        self.progress_reset()
+        self.progress_advance(0, "Start fetching models")
         data_index = 0
         for data, total in snipe_manager.request_all_sit_models():
             progress_threshold = total / 10
             for sit_model in data:
                 self.sit_models[f"{sit_model['name']} <{sit_model['id']}>"] = sit_model
                 if data_index > progress_threshold:
-                    Clock.schedule_once(partial(self.progress_events.advance, 1, "Fetching models"), 0)
+                    self.progress_advance(1, "Fetching models")
                 data_index += 1
         self._view.set_sit_models(self.sit_models)
-        Clock.schedule_once(partial(self.progress_events.advance, 100, "Fetched models successfully"), 0)
+        self.progress_advance(100, "Fetched models successfully")
 
-        Clock.schedule_once(partial(self.progress_events.advance, 0, "Start fetching status labels"), 0)
+        self.progress_reset(1)
+        self.progress_advance(0, "Start fetching status labels")
         data_index = 0
         for data, total in snipe_manager.request_all_status_labels():
             progress_threshold = total / 10
             for status_label in data:
                 self.status_labels[f"{status_label['name']} <{status_label['id']}>"] = status_label
                 if data_index > progress_threshold:
-                    Clock.schedule_once(partial(self.progress_events.advance, 1, "Fetching status labels"), 0)
+                    self.progress_advance(1, "Fetching status labels")
                 data_index += 1
         self._view.set_status_labels(self.status_labels)
-        Clock.schedule_once(partial(self.progress_events.advance, 100, "Fetched status labels successfully"), 0)
+        self.progress_advance(100, "Fetched status labels successfully")
 
         from src.controller import MainController
         if isinstance(self.parent, MainController):
@@ -53,9 +55,32 @@ class CreateAssetController(IController):
                 self.model.filepath = output_dir
 
     def execute(self, **kwargs):
-        self.progress_events.reset()
-        # ...
-        self.progress_events.advance()
+        def _execute():
+            self.progress_reset()
+            self.progress_advance(0, "Start creating csv")
+            self.progress_advance(10, "Prepare Template", timeout=1)
+            create_asset_template: ITemplate = CreateAssetTemplate(
+                sit_model=self.sit_models[self.sit_model],
+                quantity=self.quantity,
+                status_label=self.status_labels[self.status_label],
+                filepath=self.filepath
+            )
+            file = create_asset_template.create()
+            self.progress_advance(20, "Open Excel", timeout=1)
+            if self.autostart:
+                from src.controller import MainController
+                if isinstance(self.parent, MainController):
+                    excel_path = self.parent.get_settings_controller().excel_path
+                    if self.auto_upload:
+                        self.progress_advance(30, "Wait for Excel to close", timeout=1)
+                        subprocess.call([excel_path, file])
+                    else:
+                        subprocess.Popen([excel_path, file])
+            self.progress_advance(100, "Task finished", timeout=1)
+
+        thread: threading.Thread = threading.Thread(target=_execute)
+        thread.daemon = True
+        thread.start()
 
     @property
     def view(self):

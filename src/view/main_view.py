@@ -19,10 +19,10 @@ class MainView(MDFloatLayout):
         for arg in args:
             self.ids.tabs.add_widget(arg)
 
-    def reset_progress(self):
+    def reset_progress(self, *args):
         self.ids.progress_info.reset()
 
-    def advance_progress(self, amount, info, state=True):
+    def advance_progress(self, amount, info, state, *args):
         self.ids.progress_info.advance(amount, info, state)
 
 

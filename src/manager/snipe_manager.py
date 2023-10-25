@@ -78,7 +78,6 @@ class SnipeManager:
         except Exception as e:
             print(e)
             # TODO: Logging
-            sys.exit(1)
 
     @staticmethod
     def execute_now(endpoint: Endpoint):

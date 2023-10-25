@@ -92,15 +92,10 @@ class SettingsController(IController):
 
     @url.setter
     def url(self, value):
-        self.progress_events.reset()
-        self.progress_events.advance(0, f"Start creating url")
         if self.validate_url(value):
             self.model.url = value
             dotenv.set_key(self._dotenv_file, "url", self.model.url)
             self.update_timestamp()
-            self.progress_events.advance(100, f"Created url successfully")
-        else:
-            self.progress_events.advance(100, f"Failed to create url", False)
 
     @property
     def token(self):
@@ -108,15 +103,10 @@ class SettingsController(IController):
 
     @token.setter
     def token(self, value):
-        self.progress_events.reset()
-        self.progress_events.advance(0, f"Start creating token")
         if self.validate_token(value):
             self.model.token = value
             dotenv.set_key(self._dotenv_file, "token", value)
             self.update_timestamp()
-            self.progress_events.advance(100, f"Created token successfully")
-        else:
-            self.progress_events.advance(100, f"Failed to create token", False)
 
     @property
     def output_dir(self):
@@ -124,18 +114,17 @@ class SettingsController(IController):
 
     @output_dir.setter
     def output_dir(self, value):
-        self.progress_events.reset()
-        self.progress_events.advance(0, f"Start creating output directory")
+        self.progress_reset()
         if self.validate_output_dir(value):
             self.model.output_dir = value
             dotenv.set_key(self._dotenv_file, "output_dir", value)
             if self.create_folder(value):
                 self.update_timestamp()
-                self.progress_events.advance(100, f"Created output directory successfully: {value}")
+                self.progress_advance(100, f"Created output directory successfully: {value}")
             else:
-                self.progress_events.advance(100, f"Set output directory successfully: {value}")
+                self.progress_advance(100, f"Set output directory successfully: {value}")
         else:
-            self.progress_events.advance(100, f"Failed to create output directory: {value}", False)
+            self.progress_advance(100, f"Failed to create output directory: {value}", False)
 
     @property
     def excel_path(self):
@@ -143,15 +132,14 @@ class SettingsController(IController):
 
     @excel_path.setter
     def excel_path(self, value):
-        self.progress_events.reset()
-        self.progress_events.advance(0, f"Start setting excel path")
+        self.progress_reset()
         if self.validate_excel_path(value):
             self.model.excel_path = value
             dotenv.set_key(self._dotenv_file, "excel_path", value)
             self.update_timestamp()
-            self.progress_events.advance(100, f"Set excel path successfully: {value}")
+            self.progress_advance(100, f"Set excel path successfully: {value}")
         else:
-            self.progress_events.advance(100, f"Failed to set excel path: {value}", False)
+            self.progress_advance(100, f"Failed to set excel path: {value}", False)
 
     @property
     def logs_dir(self):
