@@ -1,9 +1,9 @@
 __author__ = "Matthias Stefan"
-__version__ = "0.1.0"
+__version__ = "1.0.0"
 
 from globals import Globals
 from src.controller import IController
-from src.model.settings import Settings
+from src.model import Settings
 from src.view.tabs import SettingsTab
 
 import dotenv
@@ -41,32 +41,6 @@ class SettingsController(IController):
         return
 
     @staticmethod
-    def validate_url(*arg) -> bool:
-        return True
-
-    @staticmethod
-    def validate_token(*arg) -> bool:
-        return True
-
-    @staticmethod
-    def validate_excel_path(*arg) -> bool:
-        if isinstance(arg[0], str) and os.path.exists(arg[0]) and arg[0].lower().endswith(".exe"):
-            return True
-        return False
-
-    @staticmethod
-    def validate_output_dir(*arg) -> bool:
-        if isinstance(arg[0], str) and os.path.exists(os.path.dirname(arg[0])):
-            return True
-        return False
-
-    @staticmethod
-    def validate_logs_dir(*arg) -> bool:
-        if isinstance(arg, str) and os.path.exists(os.path.dirname(arg)):
-            return True
-        return False
-
-    @staticmethod
     def create_folder(path: Path):
         if not os.path.exists(path):
             os.mkdir(path)
@@ -92,10 +66,9 @@ class SettingsController(IController):
 
     @url.setter
     def url(self, value):
-        if self.validate_url(value):
-            self.model.url = value
-            dotenv.set_key(self._dotenv_file, "url", self.model.url)
-            self.update_timestamp()
+        self.model.url = value
+        dotenv.set_key(self._dotenv_file, "url", self.model.url)
+        self.update_timestamp()
 
     @property
     def token(self):
@@ -103,10 +76,9 @@ class SettingsController(IController):
 
     @token.setter
     def token(self, value):
-        if self.validate_token(value):
-            self.model.token = value
-            dotenv.set_key(self._dotenv_file, "token", value)
-            self.update_timestamp()
+        self.model.token = value
+        dotenv.set_key(self._dotenv_file, "token", value)
+        self.update_timestamp()
 
     @property
     def output_dir(self):
@@ -115,10 +87,10 @@ class SettingsController(IController):
     @output_dir.setter
     def output_dir(self, value):
         self.progress_reset()
-        if self.validate_output_dir(value):
+        if isinstance(value, str) and os.path.exists(os.path.dirname(value)):
             self.model.output_dir = value
             dotenv.set_key(self._dotenv_file, "output_dir", value)
-            if self.create_folder(value):
+            if self.create_folder(Path(value)):
                 self.update_timestamp()
                 self.progress_advance(100, f"Created output directory successfully: {value}")
             else:
@@ -133,7 +105,7 @@ class SettingsController(IController):
     @excel_path.setter
     def excel_path(self, value):
         self.progress_reset()
-        if self.validate_excel_path(value):
+        if isinstance(value, str) and os.path.exists(value) and value.lower().endswith(".exe"):
             self.model.excel_path = value
             dotenv.set_key(self._dotenv_file, "excel_path", value)
             self.update_timestamp()
@@ -147,7 +119,7 @@ class SettingsController(IController):
 
     @logs_dir.setter
     def logs_dir(self, value):
-        if self.validate_logs_dir(value):
+        if isinstance(value, str) and os.path.exists(os.path.dirname(value)):
             self.model.logs_dir = value
             dotenv.set_key(self._dotenv_file, "logs_dir", value)
             self.update_timestamp()

@@ -8,7 +8,7 @@ from src.view.file_browser import FileBrowser
 import os
 
 from kivy.lang import Builder
-from kivy.properties import ListProperty, ObjectProperty
+from kivy.properties import ListProperty
 from kivymd.uix.tab import MDTabsBase
 from kivymd.uix.floatlayout import MDFloatLayout
 from pathlib import Path
@@ -59,7 +59,7 @@ class CreateAssetTab(MDFloatLayout, MDTabsBase):
         :type filepath: pathlib.Path
         :rtype: None
         """
-        self.set_filepath(filepath)
+        self.set_filepath(str(filepath))
         self.ids.tf_file.text = str(filepath)
 
     def set_sit_models(self, sit_models: dict):

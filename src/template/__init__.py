@@ -1,2 +1,3 @@
 from .interface_template import ITemplate
 from .create_asset_template import CreateAssetTemplate
+from .create_checkout_template import CreateCheckoutTemplate

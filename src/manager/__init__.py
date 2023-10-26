@@ -1,1 +1,2 @@
-from .snipe_manager import SnipeManager, Endpoint, EndpointQueue
+from .endpoint import Endpoint
+from .snipe_manager import SnipeManager

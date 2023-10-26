@@ -1,9 +1,9 @@
 __author__ = "Matthias Stefan"
-__version__ = "0.1.0"
+__version__ = "1.0.0"
 
 from src.controller import IController
 from src.manager import SnipeManager
-from src.model.create_asset import CreateAsset
+from src.model import CreateAsset
 from src.template import ITemplate, CreateAssetTemplate
 from src.view.tabs import CreateAssetTab
 
@@ -74,6 +74,9 @@ class CreateAssetController(IController):
                     if self.auto_upload:
                         self.progress_advance(30, "Wait for Excel to close", timeout=1)
                         subprocess.call([excel_path, file])
+                        upload_controller = self.parent.get_upload_controller()
+                        upload_controller.filepath = str(file)
+                        upload_controller.execute()
                     else:
                         subprocess.Popen([excel_path, file])
             self.progress_advance(100, "Task finished", timeout=1)

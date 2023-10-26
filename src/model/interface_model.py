@@ -1,5 +1,5 @@
 __author__ = "Matthias Stefan"
-__version__ = "0.1.0"
+__version__ = "1.0.0"
 
 from src.utility import ModelEvents
 
@@ -13,14 +13,14 @@ class IModel(abc.ABC):
 
 
 class ModelProperties(Enum):
-    MODEL = 101,
-    QUANTITY = 102,
-    STATUS_LABEL = 103
-    FILEPATH = 104,
-    AUTOSTART = 105,
-    AUTO_UPLOAD = 106,
+    MODEL = 1,
+    QUANTITY = 2,
+    STATUS_LABEL = 3
+    FILEPATH = 3,
+    AUTOSTART = 4,
+    AUTO_UPLOAD = 5,
 
-    URL = 401,
-    TOKEN = 402,
-    OUTPUT_DIR = 403,
-    EXCEL_PATH = 404
+    URL = 6,
+    TOKEN = 7,
+    OUTPUT_DIR = 8,
+    EXCEL_PATH = 9

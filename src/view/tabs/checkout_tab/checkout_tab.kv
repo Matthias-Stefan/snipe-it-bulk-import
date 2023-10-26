@@ -21,7 +21,7 @@
             hint_text: "Filename"
             helper_text: "Press the button to launch File Explorer"
             helper_text_mode: "persistent"
-            on_text: root.filepath = self.text
+            on_text: root.set_filepath(self.text)
             size_hint_x: 4.6
 
         MDRoundFlatIconButton:
@@ -40,7 +40,7 @@
         MDCheckbox:
             size_hint: None, None
             size: "48dp", "48dp"
-            on_active: root.autostart = self.active
+            on_active: root.set_autostart(self.active)
 
         Widget:
 
@@ -53,7 +53,7 @@
         MDCheckbox:
             size_hint: None, None
             size: "48dp", "48dp"
-            on_active: root.auto_upload = self.active
+            on_active: root.set_auto_upload(self.active)
 
         Widget:
 

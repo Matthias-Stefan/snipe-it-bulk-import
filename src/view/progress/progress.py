@@ -1,8 +1,10 @@
 __author__ = "Matthias Stefan"
-__version__ = "0.1.0"
+__version__ = "1.0.0"
 
 from kivymd.color_definitions import colors
 from kivymd.uix.anchorlayout import MDAnchorLayout
+
+import threading
 
 
 class ProgressInfo(MDAnchorLayout):
@@ -17,16 +19,19 @@ class ProgressInfo(MDAnchorLayout):
         self._value: int = 0
         self._color = colors["Red"]["700"]
         self._info = ""
+        self._lock = threading.Lock()
 
     def reset(self):
         """Reset progress info.
 
         :rtype: None
         """
+        self._lock.acquire()
         self.is_active = True
         self.value = 0
         self.color = colors["Red"]["700"]
         self.info = ""
+        self._lock.release()
 
     def advance(self, amount: int, info: str, state: bool):
         """Advance progress.
@@ -39,6 +44,7 @@ class ProgressInfo(MDAnchorLayout):
         :type: state: bool
         :rtype: None
         """
+        self._lock.acquire()
         assert self._value <= 100
         self.value = min((self._value + amount), 100)
         if self._value == 100:
@@ -52,7 +58,7 @@ class ProgressInfo(MDAnchorLayout):
             self.is_active = False
         if not state:
             self.color = colors["Red"]["700"]
-
+        self._lock.release()
 
     @property
     def is_active(self):

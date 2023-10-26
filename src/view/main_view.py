@@ -1,8 +1,7 @@
 __author__ = "Matthias Stefan"
-__version__ = "0.1.0"
+__version__ = "1.0.0"
 
 from globals import Globals
-from src.view.progress import ProgressInfo
 
 import os
 

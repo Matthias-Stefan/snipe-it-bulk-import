@@ -1,41 +1,15 @@
 __author__ = "Matthias Stefan"
-__version__ = "0.1.0"
+__version__ = "1.0.0"
 
 import sys
 import time
 
 from src.utility import Singleton, TooManyRequestsError, profile_function
+from src.manager import Endpoint
 
 import requests
 
 from typing import Callable
-from queue import Queue
-
-
-class Endpoint:
-    def __init__(self):
-        self.value: str = ""
-        self.callback: Callable = None
-        self.payload: dict = {}
-
-    def get_params(self):
-        return self.value, self.payload
-
-
-class Work:
-    def __init__(self, endpoint: Endpoint):
-        self.is_valid = True
-        self.endpoint = endpoint
-
-
-class EndpointQueue(Queue):
-    def __init__(self):
-        super().__init__()
-
-    def add_work(self, endpoint: Endpoint):
-        if endpoint is None or endpoint.callback is None:
-            raise Exception(f"Endpoint is not valid: {endpoint}")
-        self.put(Work(endpoint))
 
 
 @Singleton
@@ -83,14 +57,11 @@ class SnipeManager:
     def execute_now(endpoint: Endpoint):
         if endpoint is None or endpoint.callback is None:
             raise Exception(f"Endpoint is not valid: {endpoint}")
-        work = Work(endpoint)
-        while work.is_valid:
-            try:
-                response = work.endpoint.callback(*work.endpoint.get_params())
-                work.is_valid = False
-                return response
-            except TooManyRequestsError:
-                time.sleep(1)
+        try:
+            response = endpoint.callback(*endpoint.get_params())
+            return response
+        except TooManyRequestsError:
+            time.sleep(1)
 
     @http_validation
     def get(self, endpoint_url, payload):
@@ -123,14 +94,15 @@ class SnipeManager:
     @profile_function
     def request_all_sit_models(self):
         offset = 0
+        limit = 500
         while True:
             get_endpoint = Endpoint()
             get_endpoint.value = '/models'
             get_endpoint.callback = self.get
-            get_endpoint.payload = {'limit': 0, 'offset': offset}
+            get_endpoint.payload = {'limit': limit, 'offset': offset}
             response = self.execute_now(get_endpoint).json()
             yield response['rows'], response['total']
-            offset += 500
+            offset += limit
             if offset < response['total']:
                 continue
             break
@@ -138,14 +110,15 @@ class SnipeManager:
     @profile_function
     def request_all_status_labels(self):
         offset = 0
+        limit = 500
         while True:
             get_endpoint = Endpoint()
             get_endpoint.value = '/statuslabels'
             get_endpoint.callback = self.get
-            get_endpoint.payload = {'limit': 0, 'offset': offset}
+            get_endpoint.payload = {'limit': limit, 'offset': offset}
             response = self.execute_now(get_endpoint).json()
             yield response['rows'], response['total']
-            offset += 500
+            offset += limit
             if offset < response['total']:
                 continue
             break

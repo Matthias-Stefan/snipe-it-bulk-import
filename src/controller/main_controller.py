@@ -1,5 +1,5 @@
 __author__ = "Matthias Stefan"
-__version__ = "0.1.0"
+__version__ = "1.0.0"
 
 from src.controller.tab_controller import CheckoutController, \
     CreateAssetController, \
@@ -47,3 +47,8 @@ class MainController(IController):
     def get_create_asset_controller(self) -> CreateAssetController:
         return cast(CreateAssetController, self._children[1])
 
+    def get_checkout_controller(self) -> CheckoutController:
+        return cast(CheckoutController, self._children[2])
+
+    def get_upload_controller(self) -> UploadController:
+        return cast(UploadController, self._children[3])

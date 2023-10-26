@@ -1,5 +1,5 @@
 __author__ = "Matthias Stefan"
-__version__ = "0.1.0"
+__version__ = "1.0.0"
 
 from src.controller import MainController
 from src.manager import SnipeManager
@@ -8,7 +8,6 @@ from src.manager import SnipeManager
 import kivy
 kivy.require('2.2.1')
 
-from kivy.clock import Clock
 from kivymd.app import MDApp
 
 
@@ -33,4 +32,3 @@ class Main(MDApp):
 
 if __name__ == '__main__':
     Main().run()
-
