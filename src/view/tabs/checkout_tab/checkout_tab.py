@@ -1,5 +1,5 @@
 __author__ = "Matthias Stefan"
-__version__ = "0.1.1"
+__version__ = "1.0.0"
 
 from globals import Globals
 from src.model import IModel, ModelProperties
@@ -14,10 +14,14 @@ from pathlib import Path
 
 
 class CheckoutTab(MDFloatLayout, MDTabsBase):
-    """Generating the Asset Checkout CSV includes options for automatically opening the file in Excel. In the event of
-    auto-upload, the application will pause until Excel is closed, at which point it will proceed with an automatic
-    upload.
+    """Represents a composition of MDFloatLayout and MDTabsBase.
+    Generating the Asset Checkout CSV includes options for automatically opening the file in Excel. When auto-upload is
+    enabled, the application will wait until Excel is closed before proceeding with an automatic upload.
 
+    :param controller: The controller instance.
+    :type controller: src.controller.tab_controller.checkout_controller.CheckoutController
+    :param model: The model instance used for data management.
+    :type model: src.model.interface_model.IModel
     :param kwargs: Extra keyword arguments passed to the super constructor.
     """
 
@@ -38,12 +42,12 @@ class CheckoutTab(MDFloatLayout, MDTabsBase):
         self.controller.execute()
 
     def open_filebrowser(self):
-        """Opens the file chooser dialog.
+        """Opens the file browser.
 
         :rtype: None
         """
-        file_dialog = FileBrowser(self.filename_callback)
-        file_dialog.open()
+        file_browser = FileBrowser(self.filename_callback)
+        file_browser.open()
 
     def filename_callback(self, filepath: Path):
         """Callback to receive a filepath.
@@ -55,13 +59,31 @@ class CheckoutTab(MDFloatLayout, MDTabsBase):
         self.set_filepath(str(filepath))
         self.ids.tf_file.text = str(filepath)
 
-    def set_filepath(self, value):
+    def set_filepath(self, value: str):
+        """Sets the selected file's path in the controller.
+
+        :param value: The file's path.
+        :type value: str
+        :rtype: None
+        """
         self.controller.filepath = value
 
-    def set_autostart(self, value):
+    def set_autostart(self, value: bool):
+        """Sets the autostart option in the controller.
+
+        :param value: The autostart option.
+        :type value: bool
+        :rtype: None
+        """
         self.controller.autostart = value
 
-    def set_auto_upload(self, value):
+    def set_auto_upload(self, value: bool):
+        """Sets the auto-upload option in the controller.
+
+        :param value: The auto-upload option.
+        :type value: bool
+        :rtype: None
+        """
         self.controller.auto_upload = value
 
     def on_model_changed_callback(self, model_property: ModelProperties, value):

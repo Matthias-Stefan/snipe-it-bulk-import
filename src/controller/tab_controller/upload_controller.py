@@ -2,17 +2,24 @@ __author__ = "Matthias Stefan"
 __version__ = "0.1.0"
 
 from src.controller import IController
+from src.execution import UploadExecutor
 from src.model import Asset, Upload
-from src.manager import SnipeManager, Endpoint
 from src.view.tabs import UploadTab
 
-import csv
 import threading
 
 from pathlib import Path
 
 
 class UploadController(IController):
+    """Initialize an instance of the UploadController class.
+
+    This class manages the uploading of data from a CSV file to a system. It uses an UploadExecutor to perform the
+    upload in a separate thread.
+
+    :param parent: The parent controller or component.
+    :type parent: src.controller.IController
+    """
     def __init__(self, parent=None):
         super(UploadController, self).__init__(parent)
 
@@ -20,89 +27,26 @@ class UploadController(IController):
         self._view = UploadTab(controller=self, model=self._model)
 
     def post_init(self):
+        """Perform any post-initialization tasks, if necessary.
+
+        :rtype: None
+        """
         return
 
     def execute(self, **kwargs):
+        """Execute the data upload process.
+
+        This method starts the upload process in a separate thread, allowing the main application to remain responsive.
+
+        :param kwargs: Additional keyword arguments for execution.
+        :type kwargs: dict
+        :rtype: None
+        """
         def _execute():
             self.progress_reset()
             self.progress_advance(0, "Start uploading")
-            with open(self._model.filepath, newline='', encoding='utf-8-sig') as file:
-                reader = csv.DictReader(file, delimiter=';')
-                snipe_manager: SnipeManager = SnipeManager()
-                if 'model_id' in reader.fieldnames:
-                    for row in reader:
-                        asset = Asset.from_csv(row)
-                        endpoint = Endpoint()
-                        endpoint.callback = snipe_manager.post
-                        endpoint.value = '/hardware'
-                        endpoint.payload = asset.get(validate_not_none=True)
-                        snipe_manager.execute_now(endpoint)
-                    self.progress_advance(100, "Uploaded successfully")
-                elif 'checkout_id' in reader.fieldnames:
-                    for row in reader:
-                        # NOTE: get asset_id from asset_tag
-                        endpoint = Endpoint()
-                        endpoint.callback = snipe_manager.get
-                        if row['asset_tag'] is None:
-                            continue
-                        endpoint.value = f"/hardware/bytag/{row['asset_tag']}"
-                        asset = snipe_manager.execute_now(endpoint).json()
-
-                        # NOTE: checkin asset
-                        if 'assigned_to' in asset and asset['assigned_to'] is not None:
-                            endpoint = Endpoint()
-                            endpoint.callback = snipe_manager.post
-                            endpoint.value = f"/hardware/{asset['id']}/checkin"
-                            endpoint.payload = {'status_id': asset['status_label']['id']}
-                            snipe_manager.execute_now(endpoint).json()
-
-                        # NOTE: checkout
-                        if row['checkout_to_{user/asset/location}'] == 'user':
-                            # NOTE: get target
-                            endpoint = Endpoint()
-                            endpoint.callback = snipe_manager.get
-                            endpoint.value = f"/users/{row['checkout_id']}"
-                            target = snipe_manager.execute_now(endpoint).json()
-
-                            # Note: checkout
-                            endpoint = Endpoint()
-                            endpoint.callback = snipe_manager.post
-                            endpoint.value = f"/hardware/{asset['id']}/checkout"
-                            endpoint.payload = {"checkout_to_type": "user",
-                                                "assigned_user": target['id']}
-                            snipe_manager.execute_now(endpoint)
-
-                        elif row['checkout_to_{user/asset/location}'] == 'location':
-                            # NOTE: get target
-                            endpoint = Endpoint()
-                            endpoint.callback = snipe_manager.get
-                            endpoint.value = f"/locations/{row['checkout_id']}"
-                            target = snipe_manager.execute_now(endpoint).json()
-
-                            # Note: checkout
-                            endpoint = Endpoint()
-                            endpoint.callback = snipe_manager.post
-                            endpoint.value = f"/hardware/{asset['id']}/checkout"
-                            endpoint.payload = {"checkout_to_type": "location",
-                                                "assigned_location": target['id']}
-                            snipe_manager.execute_now(endpoint)
-
-                        elif row['checkout_to_{user/asset/location}'] == 'asset':
-                            # NOTE: get target
-                            endpoint = Endpoint()
-                            endpoint.callback = snipe_manager.get
-                            if row['asset_tag'] is None:
-                                continue
-                            endpoint.value = f"/hardware/bytag/{row['checkout_id']}"
-                            target = snipe_manager.execute_now(endpoint).json()
-
-                            # Note: checkout
-                            endpoint = Endpoint()
-                            endpoint.callback = snipe_manager.post
-                            endpoint.value = f"/hardware/{asset['id']}/checkout"
-                            endpoint.payload = {"checkout_to_type": "asset",
-                                                "assigned_asset": target['id']}
-                            snipe_manager.execute_now(endpoint)
+            UploadExecutor.process_csv(self._model.filepath)
+            self.progress_advance(100, "Task finished", timeout=1)
 
         thread: threading.Thread = threading.Thread(target=_execute)
         thread.daemon = True
@@ -110,14 +54,26 @@ class UploadController(IController):
 
     @property
     def view(self):
+        """Get the associated view for this controller.
+
+        :rtype: src.view.tabs.upload_tab.UploadTab
+        """
         return self._view
 
     @property
     def model(self):
+        """Get the associated model for this controller.
+
+        :rtype: src.model.upload.Upload
+        """
         return self._model
 
     @property
     def filepath(self):
+        """The filepath of the CSV file to be uploaded.
+
+        :rtype: str
+        """
         return self._model.filepath
 
     @filepath.setter

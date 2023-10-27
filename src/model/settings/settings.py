@@ -5,6 +5,13 @@ from src.model import IModel, ModelProperties
 
 
 class Settings(IModel):
+    """Initialize an instance of the Settings class.
+
+    This class represents the settings for the application, allowing the specification of URL, token, output directory,
+    Excel path, and logs directory.
+
+    :rtype: None
+    """
     def __init__(self):
         self._url = ""
         self._token = ""
@@ -14,6 +21,10 @@ class Settings(IModel):
 
     @property
     def url(self):
+        """URL for API requests.
+
+        :type: str
+        """
         return self._url
 
     @url.setter
@@ -24,6 +35,10 @@ class Settings(IModel):
 
     @property
     def token(self):
+        """API token for authentication.
+
+        :type: str
+        """
         return self._token
 
     @token.setter
@@ -34,6 +49,10 @@ class Settings(IModel):
 
     @property
     def output_dir(self):
+        """The default output directory for CSV files.
+
+        :type: str
+        """
         return self._output_dir
 
     @output_dir.setter
@@ -44,6 +63,10 @@ class Settings(IModel):
 
     @property
     def excel_path(self):
+        """The default Excel file path for automatic opening.
+
+        :type: str
+        """
         return self._excel_path
 
     @excel_path.setter
@@ -54,6 +77,10 @@ class Settings(IModel):
 
     @property
     def logs_dir(self):
+        """The directory for log files.
+
+        :type: str
+        """
         return self._logs_dir
 
     @logs_dir.setter

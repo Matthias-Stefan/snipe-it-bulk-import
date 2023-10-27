@@ -5,6 +5,13 @@ from src.model import IModel, ModelProperties
 
 
 class CreateAsset(IModel):
+    """Initialize an instance of the CreateAsset class.
+
+    This class represents the parameters for creating an asset in Snipe-IT, including the model, quantity,
+    status label, filepath for the CSV file, and options for autostart and auto-upload.
+
+    :rtype: None
+    """
     def __init__(self):
         self._model = ""
         self._quantity = 0
@@ -15,6 +22,10 @@ class CreateAsset(IModel):
 
     @property
     def model(self):
+        """The Snipe-IT model for asset creation.
+
+        :type: str
+        """
         return self._model
 
     @model.setter
@@ -25,6 +36,10 @@ class CreateAsset(IModel):
 
     @property
     def quantity(self):
+        """The quantity of assets to create.
+
+        :type: int
+        """
         return self._quantity
 
     @quantity.setter
@@ -35,6 +50,10 @@ class CreateAsset(IModel):
 
     @property
     def status_label(self):
+        """The status label for the created assets.
+
+        :type: str
+        """
         return self._status_label
 
     @status_label.setter
@@ -45,6 +64,10 @@ class CreateAsset(IModel):
 
     @property
     def filepath(self):
+        """Filepath for the CSV file that will be created.
+
+        :type: str
+        """
         return self._filepath
 
     @filepath.setter
@@ -55,6 +78,10 @@ class CreateAsset(IModel):
 
     @property
     def autostart(self):
+        """The option to automatically invoke Excel for the created CSV file.
+
+        :type: bool
+        """
         return self._autostart
 
     @autostart.setter
@@ -65,6 +92,10 @@ class CreateAsset(IModel):
 
     @property
     def auto_upload(self):
+        """The option to automatically upload the CSV file.
+
+        :type: bool
+        """
         return self._auto_upload
 
     @auto_upload.setter

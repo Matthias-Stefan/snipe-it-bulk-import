@@ -12,6 +12,13 @@ import threading
 
 
 class CreateAssetController(IController):
+    """Initialize an instance of the CreateAssetController class.
+
+    This class is responsible for controlling the creation of asset records based on user input and templates.
+
+    :param parent: The parent controller or component.
+    :type parent: src.controller.IController
+    """
     def __init__(self, parent=None):
         super(CreateAssetController, self).__init__(parent)
         self.sit_models: dict = {}
@@ -21,6 +28,13 @@ class CreateAssetController(IController):
         self._view = CreateAssetTab(controller=self, model=self._model)
 
     def post_init(self):
+        """Perform post-initialization tasks.
+
+        This method is called after the controller's initialization. It fetches models and status labels, sets the output
+        directory, and updates the progress bar accordingly.
+
+        :rtype: None
+        """
         snipe_manager = SnipeManager()
         self.progress_reset()
         self.progress_advance(0, "Start fetching models")
@@ -55,6 +69,13 @@ class CreateAssetController(IController):
                 self.model.filepath = output_dir
 
     def execute(self, **kwargs):
+        """Execute the asset creation process.
+
+        This method creates an asset creation template, prepares the CSV file, and optionally starts Excel for user
+        interaction.
+
+        :rtype: None
+        """
         def _execute():
             self.progress_reset()
             self.progress_advance(0, "Start creating csv")
@@ -87,10 +108,18 @@ class CreateAssetController(IController):
 
     @property
     def view(self):
+        """Get the associated view for this controller.
+
+        :rtype: src.view.tabs.create_asset_tab.CreateAssetTab
+        """
         return self._view
 
     @property
     def model(self):
+        """Get the model associated with this controller.
+
+        :rtype: src.model.create_asset.CreateAsset
+        """
         return self._model
 
     @property

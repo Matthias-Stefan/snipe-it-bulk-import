@@ -27,4 +27,9 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_theme = 'alabaster'
+html_theme_options = {
+    'page_width': '1800px',
+    'body_min_width': '1400px',
+    'sidebar_width': '400px'
+}
 html_static_path = ['_static']

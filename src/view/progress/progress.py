@@ -10,7 +10,6 @@ import threading
 class ProgressInfo(MDAnchorLayout):
     """Managing progress information.
 
-    :inherits: kivymd.uix.anchorlayout.MDAnchorLayout
     :param kwargs: Extra keyword arguments passed to the super constructor.
     """
     def __init__(self, **kwargs):

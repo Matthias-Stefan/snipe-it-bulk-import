@@ -1,7 +1,6 @@
 __author__ = "Matthias Stefan"
 __version__ = "1.0.0"
 
-import sys
 import time
 
 from src.utility import Singleton, TooManyRequestsError, profile_function
@@ -9,11 +8,18 @@ from src.manager import Endpoint
 
 import requests
 
+from functools import wraps
 from typing import Callable
 
 
-@Singleton
+#@Singleton
 class SnipeManager:
+    """Initialize an instance of the SnipeManager class.
+
+    The SnipeManager class is a singleton responsible for managing connections to the Snipe-IT API.
+
+    :rtype: None
+    """
     def __init__(self):
         self._url = None
         self._token = None
@@ -21,6 +27,13 @@ class SnipeManager:
 
     @staticmethod
     def http_validation(callback: Callable):
+        """A decorator for validating HTTP responses.
+
+        This decorator validates HTTP responses and handles exceptions for status code and error responses.
+
+        :rtype: typing.Callable
+        """
+        @wraps(callback)
         def wrapper(*args, **kwargs):
             response = callback(*args, **kwargs)
 
@@ -39,6 +52,18 @@ class SnipeManager:
         return wrapper
 
     def post_init(self, url, token):
+        """Initialize Snipe-IT API connection parameters.
+
+        This method initializes the URL and token for connecting to the Snipe-IT API.
+
+        :type url: str
+        :param url: The URL of the Snipe-IT API.
+
+        :type token: str
+        :param token: The API token for authentication.
+
+        :rtype: None
+        """
         self._url = url
         self._token = token
         self._header = {"Authorization": f"Bearer {self._token}",
@@ -55,6 +80,15 @@ class SnipeManager:
 
     @staticmethod
     def execute_now(endpoint: Endpoint):
+        """Execute an HTTP endpoint request.
+
+        This method executes an HTTP endpoint request and handles the TooManyRequestsError.
+
+        :type endpoint: Endpoint
+        :param endpoint: An instance of the Endpoint class.
+
+        :rtype: None
+        """
         if endpoint is None or endpoint.callback is None:
             raise Exception(f"Endpoint is not valid: {endpoint}")
         try:
@@ -65,6 +99,19 @@ class SnipeManager:
 
     @http_validation
     def get(self, endpoint_url, payload):
+        """Make an HTTP GET request.
+
+        This method sends an HTTP GET request to the specified endpoint URL.
+
+        :type endpoint_url: str
+        :param endpoint_url: The URL for the GET request.
+
+        :type payload: dict
+        :param payload: The payload for the GET request.
+
+        :rtype: requests.Response
+        :return: The HTTP response object.
+        """
         if not self._url or not self._header:
             return None
         response = requests.get(url=self._url+endpoint_url, json=payload, headers=self._header, verify=False)
@@ -72,6 +119,19 @@ class SnipeManager:
 
     @http_validation
     def post(self, endpoint_url, payload):
+        """Make an HTTP POST request.
+
+        This method sends an HTTP POST request to the specified endpoint URL.
+
+        :type endpoint_url: str
+        :param endpoint_url: The URL for the POST request.
+
+        :type payload: dict
+        :param payload: The payload for the POST request.
+
+        :rtype: requests.Response
+        :return: The HTTP response object.
+        """
         if not self._url or not self._header:
             return None
         response = requests.post(url=self._url+endpoint_url, json=payload, headers=self._header, verify=False)
@@ -79,6 +139,19 @@ class SnipeManager:
 
     @http_validation
     def put(self, endpoint_url, payload):
+        """Make an HTTP PUT request.
+
+        This method sends an HTTP PUT request to the specified endpoint URL.
+
+        :type endpoint_url: str
+        :param endpoint_url: The URL for the PUT request.
+
+        :type payload: dict
+        :param payload: The payload for the PUT request.
+
+        :rtype: requests.Response
+        :return: The HTTP response object.
+        """
         if not self._url or not self._header:
             return None
         response = requests.put(url=self._url+endpoint_url, json=payload, headers=self._header, verify=False)
@@ -86,6 +159,19 @@ class SnipeManager:
 
     @http_validation
     def patch(self, endpoint_url, payload):
+        """Make an HTTP PATCH request.
+
+        This method sends an HTTP PATCH request to the specified endpoint URL.
+
+        :type endpoint_url: str
+        :param endpoint_url: The URL for the PATCH request.
+
+        :type payload: dict
+        :param payload: The payload for the PATCH request.
+
+        :rtype: requests.Response
+        :return: The HTTP response object.
+        """
         if not self._url or not self._header:
             return None
         response = requests.patch(url=self._url+endpoint_url, json=payload, headers=self._header, verify=False)
@@ -93,6 +179,13 @@ class SnipeManager:
 
     @profile_function
     def request_all_sit_models(self):
+        """Request all SIT models from Snipe-IT.
+
+        This method sends HTTP requests to retrieve all models from the Snipe-IT API.
+
+        :rtype: Generator
+        :return: A generator yielding response rows and total count.
+        """
         offset = 0
         limit = 500
         while True:
@@ -109,6 +202,13 @@ class SnipeManager:
 
     @profile_function
     def request_all_status_labels(self):
+        """Request all status labels from Snipe-IT.
+
+        This method sends HTTP requests to retrieve all status labels from the Snipe-IT API.
+
+        :rtype: Generator
+        :return: A generator yielding response rows and total count.
+        """
         offset = 0
         limit = 500
         while True:

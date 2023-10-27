@@ -5,6 +5,13 @@ from src.model import IModel, ModelProperties
 
 
 class Checkout(IModel):
+    """Initialize an instance of the Checkout class.
+
+    This class represents the parameters for checking out assets and includes the filepath for the CSV file, as well as
+    options for autostarting Excel and automatically uploading the CSV.
+
+    :rtype: None
+    """
     def __init__(self):
         self._filepath = ""
         self._autostart = False

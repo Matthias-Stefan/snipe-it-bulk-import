@@ -11,6 +11,15 @@ import threading
 
 
 class CheckoutController(IController):
+    """
+    Initialize an instance of the CheckoutController class.
+
+    This class controls the checkout process, including generating a CSV file based on a template and opening it in
+    Excel.
+
+    :param parent: The parent controller or component.
+    :type parent: src.controller.IController
+    """
     def __init__(self, parent=None):
         super(CheckoutController, self).__init__(parent)
         self._model = Upload()
@@ -20,6 +29,14 @@ class CheckoutController(IController):
         return
 
     def execute(self, **kwargs):
+        """
+        Execute the checkout process.
+
+        This method starts the checkout process by preparing a CSV template, opening it in Excel, and optionally
+        uploading it.
+
+        :param kwargs: Additional keyword arguments.
+        """
         def _execute():
             self.progress_reset()
             self.progress_advance(0, "Start creating csv")
@@ -49,15 +66,23 @@ class CheckoutController(IController):
 
     @property
     def view(self):
+        """Get the associated view for this controller.
+
+        :rtype: src.view.tabs.checkout_tab.CheckoutTab
+        """
         return self._view
 
     @property
     def model(self):
+        """Get the model associated with this controller.
+
+        :rtype: src.model.checkout.Checkout
+        """
         return self._model
 
     @property
     def filepath(self):
-        """Filepath of the CSV to be uploaded.
+        """The filepath of the CSV to be uploaded.
 
         :type: pathlib.Path
         """
@@ -69,7 +94,7 @@ class CheckoutController(IController):
 
     @property
     def autostart(self):
-        """Determine if Excel should be automatically invoked.
+        """Whether Excel should be automatically invoked.
 
         :type: bool
         """
@@ -81,7 +106,7 @@ class CheckoutController(IController):
 
     @property
     def auto_upload(self):
-        """Determine if CSV should be automatically uploaded.
+        """Whether the CSV should be automatically uploaded.
 
         :type: bool
         """

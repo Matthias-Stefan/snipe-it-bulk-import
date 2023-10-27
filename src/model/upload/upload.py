@@ -7,6 +7,13 @@ from src.model import IModel, ModelProperties
 
 
 class Upload(IModel):
+    """Initialize an instance of the Upload class.
+
+    This class represents the upload functionality and allows specifying the file path, autostart, and auto-upload
+    settings.
+
+    :rtype: None
+    """
     def __init__(self):
         self._filepath = ""
         self._autostart = False
@@ -14,6 +21,10 @@ class Upload(IModel):
 
     @property
     def filepath(self):
+        """Filepath.
+
+        :type: str
+        """
         return self._filepath
 
     @filepath.setter
