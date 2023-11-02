@@ -1,0 +1,6 @@
+﻿id;name;asset_tag;model_id;serial;purchase_date;purchase_cost;order_number;assigned_to;notes;image;user_id;created_at;updated_at;physical;deleted_at;status_id;archived;warranty_months;depreciate;supplier_id;requestable;rtd_location_id;accepted;last_checkout;expected_checkout;company_id;assigned_type;last_audit_date;next_audit_date;location_id;checkin_counter;checkout_counter;requests_counter;model_number;alt_barcode;user_can_checkout;category;manufacturer;_snipeit_screen_type_36;_snipeit_type_of_usage_20;_snipeit_room_27;_snipeit_fixed_asset_number_3
+;Eizo 24 Zoll 16:9;;42;YrhEQgijqm;01.11.2023;299.99;8081;;;;;;;;;1;;;;;;;;;;;;;;;;;;;;;;;Full HD Screen;;;
+;Eizo 24 Zoll 16:10;;42;PiQVCFccpm;02.11.2023;299.99;8081;;;;;;;;;1;;;;;;;;;;;;;;;;;;;;;;;Full HD Screen;;;
+;Eizo 24 Zoll 16:11;;42;RhP2bnd9uE;03.11.2023;299.99;8081;;;;;;;;;1;;;;;;;;;;;;;;;;;;;;;;;Full HD Screen;;;
+;Eizo 24 Zoll 16:12;;42;M28EpXpvzx;04.11.2023;299.99;8081;;;;;;;;;1;;;;;;;;;;;;;;;;;;;;;;;Full HD Screen;;;
+;Eizo 24 Zoll 16:13;;42;mms2dn9YBu;05.11.2023;299.99;8081;;;;;;;;;1;;;;;;;;;;;;;;;;;;;;;;;Full HD Screen;;;
