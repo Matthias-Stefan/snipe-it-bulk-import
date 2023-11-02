@@ -87,7 +87,7 @@ class ProgressInfo(MDAnchorLayout):
 
     @property
     def color(self):
-        """UI color.
+        """view color.
 
         :type: str
         """

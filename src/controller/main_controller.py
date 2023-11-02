@@ -6,6 +6,7 @@ from src.controller.tab_controller import CheckoutController, \
     SettingsController, \
     UploadController
 from src.controller import IController
+from src.manager.logger import Logger
 from src.view import MainView
 
 from typing import cast
@@ -30,6 +31,7 @@ class MainController(IController):
                                    self._children[3].view,
                                    controller=self)
 
+    @Logger.log_function
     def post_init(self):
         """Perform any post-initialization tasks for the controllers.
 

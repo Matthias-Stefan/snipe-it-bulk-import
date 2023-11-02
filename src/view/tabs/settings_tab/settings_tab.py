@@ -33,7 +33,7 @@ class SettingsTab(MDFloatLayout, MDTabsBase):
     def set_url(self, url: str):
         """Sets the URL input from the view to the controller.
 
-        :param url: The input received from the UI component.
+        :param url: The input received from the view component.
         :type url: str
         :return: None
         """
@@ -42,7 +42,7 @@ class SettingsTab(MDFloatLayout, MDTabsBase):
     def set_token(self, token: str):
         """Sets the token input from the view to the controller.
 
-        :param token: The input received from the UI component.
+        :param token: The input received from the view component.
         :type token: str
         :return: None
         """
@@ -51,7 +51,7 @@ class SettingsTab(MDFloatLayout, MDTabsBase):
     def set_excel_path(self, excel_path: str):
         """Sets the Excel path input from the view to the controller.
 
-        :param excel_path: The input received from the UI component.
+        :param excel_path: The input received from the view component.
         :type excel_path: str
         :return: None
         """
@@ -60,7 +60,7 @@ class SettingsTab(MDFloatLayout, MDTabsBase):
     def set_output_folder(self, output_folder):
         """Sets the output path input from the view to the controller.
 
-        :param output_folder: The input received from the UI component.
+        :param output_folder: The input received from the view component.
         :type output_folder: str
         :return: None
         """

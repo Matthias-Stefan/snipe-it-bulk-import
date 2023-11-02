@@ -1,10 +1,11 @@
 __author__ = "Matthias Stefan"
 __version__ = "1.0.0"
 
-import time
+import sys
 
-from src.utility import Singleton, TooManyRequestsError, profile_function
 from src.manager import Endpoint
+from src.manager.logger import Logger
+from src.utility import Singleton, TooManyRequestsError, profile_function
 
 import requests
 
@@ -12,7 +13,7 @@ from functools import wraps
 from typing import Callable
 
 
-#@Singleton
+@Singleton
 class SnipeManager:
     """Initialize an instance of the SnipeManager class.
 
@@ -33,21 +34,24 @@ class SnipeManager:
 
         :rtype: typing.Callable
         """
+        @Logger.log_function
         @wraps(callback)
         def wrapper(*args, **kwargs):
             response = callback(*args, **kwargs)
 
             if response.status_code == 429:
+                Logger.error("HTTP Validation: Too many requests")
                 raise TooManyRequestsError("too many requests")
 
             if not 200 <= response.status_code <= 300:
+                Logger.error(f"HTTP Validation: Status code {response.status_code}, Response: {response.text}")
                 raise Exception(response.status_code, response.text)
 
             response_ = response.json()
             if 'status' in response_ and \
                     response_['status'] == 'error':
+                Logger.error(f"HTTP Validation: Error response - {response.text}")
                 raise Exception(response.text)
-                # TODO: Logger
             return response
         return wrapper
 
@@ -74,9 +78,9 @@ class SnipeManager:
         get_endpoint.callback = self.get
         try:
             self.execute_now(get_endpoint)
-        except Exception as e:
-            print(e)
-            # TODO: Logging
+        except Exception:
+            Logger.error("Unable to connect to the Snipe-IT instance.")
+            sys.exit(1)
 
     @staticmethod
     def execute_now(endpoint: Endpoint):
@@ -95,7 +99,7 @@ class SnipeManager:
             response = endpoint.callback(*endpoint.get_params())
             return response
         except TooManyRequestsError:
-            time.sleep(1)
+            Logger.warning("Snipe-IT has encountered a high volume of requests and responded with an error.")
 
     @http_validation
     def get(self, endpoint_url, payload):
@@ -113,6 +117,7 @@ class SnipeManager:
         :return: The HTTP response object.
         """
         if not self._url or not self._header:
+            Logger.warning(f"Incomplete configuration: URL: {self._url}, header: {self._header}")
             return None
         response = requests.get(url=self._url+endpoint_url, json=payload, headers=self._header, verify=False)
         return response
@@ -133,7 +138,9 @@ class SnipeManager:
         :return: The HTTP response object.
         """
         if not self._url or not self._header:
+            Logger.warning(f"Incomplete configuration: URL: {self._url}, header: {self._header}")
             return None
+        Logger.info(f'HTTP POST Payload: {payload}')
         response = requests.post(url=self._url+endpoint_url, json=payload, headers=self._header, verify=False)
         return response
 
@@ -153,6 +160,7 @@ class SnipeManager:
         :return: The HTTP response object.
         """
         if not self._url or not self._header:
+            Logger.warning(f"Incomplete configuration: URL: {self._url}, header: {self._header}")
             return None
         response = requests.put(url=self._url+endpoint_url, json=payload, headers=self._header, verify=False)
         return response
@@ -173,6 +181,7 @@ class SnipeManager:
         :return: The HTTP response object.
         """
         if not self._url or not self._header:
+            Logger.warning(f"Incomplete configuration: URL: {self._url}, header: {self._header}")
             return None
         response = requests.patch(url=self._url+endpoint_url, json=payload, headers=self._header, verify=False)
         return response

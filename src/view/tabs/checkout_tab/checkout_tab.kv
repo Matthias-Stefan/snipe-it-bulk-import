@@ -25,6 +25,7 @@
             size_hint_x: 4.6
 
         MDRoundFlatIconButton:
+            id: bt_open
             text: "Open"
             icon: "folder"
             pos_hint: {'center_x': 0.5, 'center_y': 0.6}
@@ -38,6 +39,7 @@
             text: "Autostart Excel"
 
         MDCheckbox:
+            id: cb_autostart
             size_hint: None, None
             size: "48dp", "48dp"
             on_active: root.set_autostart(self.active)
@@ -51,6 +53,7 @@
             text: "Autoupload"
 
         MDCheckbox:
+            id: cb_auto_upload
             size_hint: None, None
             size: "48dp", "48dp"
             on_active: root.set_auto_upload(self.active)
@@ -65,5 +68,6 @@
         padding: 40, 40, 40, 40
 
         MDRaisedButton:
+            id: bt_create
             text: "Create"
             on_press: root.on_template_create()

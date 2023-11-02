@@ -39,6 +39,7 @@ Contents
    :caption: Manager
 
    src/manager/endpoint
+   src/manager/logger
    src/manager/snipe_manager
 
 .. toctree::

@@ -2,7 +2,7 @@ __author__ = "Matthias Stefan"
 __version__ = "1.0.0"
 
 from src.controller import IController
-from src.model import Upload
+from src.model import Checkout
 from src.template import ITemplate, CreateCheckoutTemplate
 from src.view.tabs import CheckoutTab
 
@@ -11,8 +11,7 @@ import threading
 
 
 class CheckoutController(IController):
-    """
-    Initialize an instance of the CheckoutController class.
+    """Initialize an instance of the CheckoutController class.
 
     This class controls the checkout process, including generating a CSV file based on a template and opening it in
     Excel.
@@ -22,7 +21,7 @@ class CheckoutController(IController):
     """
     def __init__(self, parent=None):
         super(CheckoutController, self).__init__(parent)
-        self._model = Upload()
+        self._model = Checkout()
         self._view = CheckoutTab(controller=self, model=self._model)
 
     def post_init(self):
@@ -63,6 +62,7 @@ class CheckoutController(IController):
         thread: threading.Thread = threading.Thread(target=_execute)
         thread.daemon = True
         thread.start()
+        return _execute
 
     @property
     def view(self):

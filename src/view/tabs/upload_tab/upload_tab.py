@@ -27,8 +27,7 @@ class UploadTab(MDFloatLayout, MDTabsBase):
     def __init__(self, controller, model: IModel, **kwargs):
         super(UploadTab, self).__init__(**kwargs)
         self.controller = controller
-        self.model = model
-        self.model.model_events.on_changed += self.on_model_changed_callback
+        model.model_events.on_changed += self.on_model_changed_callback
 
         self.title = "Upload"
         self.icon = "upload"
@@ -75,7 +74,7 @@ class UploadTab(MDFloatLayout, MDTabsBase):
         :type value: any
         :rtype: None
         """
-        if model_property == ModelProperties.OUTPUT_DIR:
+        if model_property == ModelProperties.FILEPATH:
             self.ids.tf_file.text = value
 
 

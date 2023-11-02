@@ -28,8 +28,7 @@ class CheckoutTab(MDFloatLayout, MDTabsBase):
     def __init__(self, controller, model: IModel, **kwargs):
         super(CheckoutTab, self).__init__(**kwargs)
         self.controller = controller
-        self.model = model
-        self.model.model_events.on_changed += self.on_model_changed_callback
+        model.model_events.on_changed += self.on_model_changed_callback
 
         self.title = "Checkout Template"
         self.icon = "source-branch-check"

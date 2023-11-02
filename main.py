@@ -3,7 +3,7 @@ __version__ = "1.0.0"
 
 from src.controller import MainController
 from src.manager import SnipeManager
-
+from src.manager.logger import Logger
 
 import kivy
 kivy.require('2.2.1')
@@ -23,9 +23,11 @@ class Main(MDApp):
         self.snipe_manager.post_init(self.controller.get_settings_controller().url,
                                      self.controller.get_settings_controller().token)
 
+    @Logger.log_function
     def build(self):
         return self.controller.view
 
+    @Logger.log_function
     def on_start(self):
         self.controller.post_init()
 

@@ -34,8 +34,7 @@ class CreateAssetTab(MDFloatLayout, MDTabsBase):
     def __init__(self, controller, model: IModel, **kwargs):
         super(CreateAssetTab, self).__init__(**kwargs)
         self.controller = controller
-        self.model = model
-        self.model.model_events.on_changed += self.on_model_changed_callback
+        model.model_events.on_changed += self.on_model_changed_callback
 
         self.title = "Create Asset Template"
         self.icon = "devices"
@@ -154,7 +153,7 @@ class CreateAssetTab(MDFloatLayout, MDTabsBase):
 
     @filter_sit_model.setter
     def filter_sit_model(self, value: str):
-        self.ids.sp_model.is_open = True
+        self.ids.sp_model.is_open = False
         self._filter_sit_model = value
         if len(str(value)) > 0:
             selected_sit_models = [elem for elem in self.controller.sit_models.keys() if
@@ -173,14 +172,14 @@ class CreateAssetTab(MDFloatLayout, MDTabsBase):
 
     @filter_status_label.setter
     def filter_status_label(self, value: str):
-        self.ids.sp_status_label.is_open = True
+        self.ids.sp_status_label.is_open = False
         self._filter_status_label = value
         if len(str(value)) > 0:
             selected_status_labels = [elem for elem in self.controller.status_labels.keys() if
                                       elem.find(self._filter_status_label) != -1]
             self.selected_status_labels = selected_status_labels
         else:
-            self.selected_status_labels = self.status_labels
+            self.selected_status_labels = [elem for elem in self.controller.status_labels.keys()]
 
     def on_model_changed_callback(self, model_property: ModelProperties, value: any):
         """Callback function to handle changes in the model's properties.

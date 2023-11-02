@@ -51,6 +51,7 @@ class UploadController(IController):
         thread: threading.Thread = threading.Thread(target=_execute)
         thread.daemon = True
         thread.start()
+        return _execute
 
     @property
     def view(self):

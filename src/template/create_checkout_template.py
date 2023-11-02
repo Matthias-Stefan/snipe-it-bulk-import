@@ -28,7 +28,7 @@ class CreateCheckoutTemplate(ITemplate):
         :rtype: pathlib.Path
         """
         filepath = self._build_filepath()
-        with open(filepath, "w", newline='', encoding='utf-8-sig') as file:
+        with open(filepath, "w+", newline='', encoding='utf-8-sig') as file:
             header: list = ["asset_tag", "checkout_to_{user/asset/location}", "checkout_id", "status_id"]
             writer = csv.DictWriter(file, header, delimiter=';')
             writer.writeheader()

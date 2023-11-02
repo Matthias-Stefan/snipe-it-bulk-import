@@ -39,7 +39,7 @@ class CreateAssetTemplate(ITemplate):
         """
         filepath = self._build_filepath()
         asset = self._build_asset()
-        with open(filepath, "w", newline='', encoding='utf-8-sig') as file:
+        with open(filepath, "w+", newline='', encoding='utf-8-sig') as file:
             content: dict = asset.get()
             writer = csv.DictWriter(file, content.keys(), delimiter=';')
             writer.writeheader()

@@ -74,16 +74,3 @@ class Settings(IModel):
         if isinstance(value, str) and value != self._excel_path:
             self._excel_path = value
             self.model_events.on_changed(ModelProperties.EXCEL_PATH, self._excel_path)
-
-    @property
-    def logs_dir(self):
-        """The directory for log files.
-
-        :type: str
-        """
-        return self._logs_dir
-
-    @logs_dir.setter
-    def logs_dir(self, value):
-        if isinstance(value, str) and value != self._logs_dir:
-            self._logs_dir = value

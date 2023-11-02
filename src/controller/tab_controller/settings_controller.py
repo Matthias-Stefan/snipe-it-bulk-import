@@ -15,8 +15,7 @@ from pathlib import Path
 
 
 class SettingsController(IController):
-    """
-    Initialize an instance of the SettingsController class.
+    """Initialize an instance of the SettingsController class.
 
     This controller manages the application's settings, such as URL, API token, output directory, Excel path, and logs directory.
 
@@ -40,7 +39,6 @@ class SettingsController(IController):
         self._model.token = self._config.get("token")
         self._model.output_dir = self._config.get("output_dir")
         self._model.excel_path = self._config.get("excel_path")
-        self._model.logs_dir = self._config.get("logs_dir")
 
     def post_init(self):
         """Perform any post-initialization tasks, if necessary.
@@ -165,18 +163,3 @@ class SettingsController(IController):
             self.progress_advance(100, f"Set excel path successfully: {value}")
         else:
             self.progress_advance(100, f"Failed to set excel path: {value}", False)
-
-    @property
-    def logs_dir(self):
-        return self.model.logs_dir
-
-    @logs_dir.setter
-    def logs_dir(self, value):
-        """The logs directory.
-
-        :rtype: str
-        """
-        if isinstance(value, str) and os.path.exists(os.path.dirname(value)):
-            self.model.logs_dir = value
-            dotenv.set_key(self._dotenv_file, "logs_dir", value)
-            self.update_timestamp()

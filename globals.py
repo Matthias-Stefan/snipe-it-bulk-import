@@ -6,6 +6,7 @@ import os
 
 class Globals:
     _project_dir = os.path.dirname(os.path.abspath(__file__))
+    _logs_dir = os.path.join(_project_dir, "logs")
     _source_package = os.path.join(_project_dir, "src")
     _model_package = os.path.join(_source_package, "model")
     _settings_package = os.path.join(_model_package, "settings")
@@ -23,6 +24,10 @@ class Globals:
     @staticmethod
     def get_project_dir():
         return Globals._project_dir
+
+    @staticmethod
+    def get_logs_dir():
+        return Globals._logs_dir
 
     @staticmethod
     def get_source_package():

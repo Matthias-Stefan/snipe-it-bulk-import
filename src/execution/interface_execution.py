@@ -1,8 +1,6 @@
 __author__ = "Matthias Stefan"
 __version__ = "1.0.0"
 
-from src.manager import SnipeManager
-
 import abc
 import csv
 
@@ -18,7 +16,6 @@ class IExecution(abc.ABC):
     """
     def __init__(self, reader: csv.DictReader):
         self._reader = reader
-        self._snipe_manager: SnipeManager = SnipeManager()
 
     def process(self):
         """
