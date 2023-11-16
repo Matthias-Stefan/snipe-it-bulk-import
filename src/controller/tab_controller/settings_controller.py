@@ -1,8 +1,9 @@
 __author__ = "Matthias Stefan"
-__version__ = "1.0.0"
+__version__ = "1.0.1"
 
 from globals import Globals
 from src.controller import IController
+from src.manager.logger import Logger
 from src.model import Settings
 from src.view.tabs import SettingsTab
 
@@ -29,7 +30,7 @@ class SettingsController(IController):
             if len(dotenv.find_dotenv(self._dotenv_file)) > 0:
                 self._config = dotenv.dotenv_values(self._dotenv_file)
         except IOError as error:
-            print(error)
+            Logger.error(f"Failed to load environment file: {error}")
             sys.exit()
 
         self._model = Settings()

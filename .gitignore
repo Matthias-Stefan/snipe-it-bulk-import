@@ -10,3 +10,4 @@ config
 config/*
 uploads
 uploads/*
+test/__pychache__

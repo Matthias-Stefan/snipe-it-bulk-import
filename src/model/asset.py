@@ -1,6 +1,7 @@
 __author__ = "Matthias Stefan"
-__version__ = "1.0.0"
+__version__ = "1.0.1"
 
+from src.manager.logger import Logger
 from src.model.field import Field
 
 import re
@@ -196,4 +197,6 @@ class Asset:
                 converted_date = input_date.strftime('%Y-%m-%d')
                 return converted_date
         except ValueError as error:
-            return str(error)
+            Logger.error(f"Cannot convert date to appropriate format: {error}")
+            return None
+
